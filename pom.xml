@@ -75,16 +75,16 @@
 		          <target>1.8</target>
 		        </configuration>
 			</plugin>
-								<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<systemPropertyVariables>
-								<eureka.config.dir>${project.build.directory}/test-classes/eureka-config/eureka</eureka.config.dir>
-							</systemPropertyVariables>
-							<workingDirectory>${project.build.directory}</workingDirectory>
-						</configuration>
-					</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<eureka.config.dir>${project.build.directory}/test-classes/eureka-config/eureka</eureka.config.dir>
+					</systemPropertyVariables>
+					<workingDirectory>${project.build.directory}</workingDirectory>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
@@ -146,6 +146,7 @@
 		<profile>
 			<id>tomcat</id>
 			<properties>
+			<embedded-webserver-port>8000</embedded-webserver-port>
 				<cas-server-version>3.0-Alpha-26</cas-server-version>
 				<cas-mock-version>2.0</cas-mock-version>
 				<tomcat.httpsPort>8443</tomcat.httpsPort>
@@ -214,20 +215,17 @@
                                     </resources>
                                 </configuration>
                             </execution>
-                           <execution>
+                            <execution>
                                 <id>copy-application.properties-file</id>
                                 <phase>process-resources</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.directory}/eureka-config</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/eureka-config/eureka</outputDirectory>
                                     <resources>
                                         <resource>
-                                            <directory>${basedir}/src/main/resources/tomcat-eureka-config</directory>
-                                            <includes>
-                                                <include>application.properties</include>
-                                            </includes>
+                                            <directory>${basedir}/src/main/resources/tomcat-eureka-config/eureka</directory>
                                             <filtering>true</filtering>
                                         </resource>
                                     </resources>
