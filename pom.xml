@@ -26,7 +26,7 @@
 		<eurekaclinical-ontology-version>2.0</eurekaclinical-ontology-version>
 		<aiw-i2b2-etl-version>3.0</aiw-i2b2-etl-version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<user-service-version>1.0.1</user-service-version>
+		<user-service-version>2.0-Alpha-2</user-service-version>
 	</properties>
 	
 	<scm>
