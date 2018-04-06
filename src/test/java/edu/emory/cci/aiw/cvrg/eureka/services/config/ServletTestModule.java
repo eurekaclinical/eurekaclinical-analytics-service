@@ -50,7 +50,7 @@ import org.eurekaclinical.common.config.AbstractTestJerseyServletModuleWithPersi
  */
 class ServletTestModule extends AbstractTestJerseyServletModuleWithPersist {
 	
-	private static final String PACKAGE_NAMES = "edu.emory.cci.aiw.cvrg.eureka.services.resource;edu.emory.cci.aiw.cvrg.eureka.common.json";
+	private static final String PACKAGE_NAMES = "edu.emory.cci.aiw.cvrg.eureka.services.resource;edu.emory.cci.aiw.cvrg.eureka.services.json";
 
 	ServletTestModule() {
 		super(PACKAGE_NAMES);
