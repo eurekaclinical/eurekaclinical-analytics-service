@@ -400,8 +400,8 @@
                                     <fileset>
                                         <basedir>${project.build.directory}</basedir>
                                         <includes>
-                                            <include>eurekaclinical-protempa-service-config/sql/i2b2_data_tables_1_7_h2.sql</include>
-                                            <include>eurekaclinical-protempa-service-config/sql/mock_stored_procedures_h2.sql</include>
+                                            <include>eurekaclinical-protempa-service/sql/i2b2_data_tables_1_7_h2.sql</include>
+                                            <include>eurekaclinical-protempa-service/sql/mock_stored_procedures_h2.sql</include>
                                         </includes>
                                     </fileset>
                                     <sqlCommand />
