@@ -128,21 +128,6 @@ public class ServiceProperties extends CasJerseyEurekaClinicalProperties {
 	}
 	
 	/**
-     * Get the base URL for the application for external users. Always
-     * ends with a slash ("/").
-     *
-     * @return The base URL.
-     */
-	public String getApplicationUrl() {
-		String result = this.getValue("eureka.webapp.url");
-		if (result.endsWith("/")) {
-			return result;
-		} else {
-			return result + "/";
-		}
-	}
-	
-	/**
 	 * Get the support email address for the application.
 	 *
 	 * @return The support email address.
@@ -169,38 +154,6 @@ public class ServiceProperties extends CasJerseyEurekaClinicalProperties {
 	public List<String> getDefaultSystemPropositions() {
 		return this.getStringListValue("eureka.services.defaultprops",
 				new ArrayList<>());
-	}
-        
-	public String getGoogleOAuthKey() {
-		return this.getValue("eureka.webapp.googleoauthkey");
-	}
-
-	public String getGoogleOAuthSecret() {
-		return this.getValue("eureka.webapp.googleoauthsecret");
-	}
-
-	public String getGitHubOAuthKey() {
-		return this.getValue("eureka.webapp.githuboauthkey");
-	}
-
-	public String getGitHubOAuthSecret() {
-		return this.getValue("eureka.webapp.githuboauthsecret");
-	}
-
-	public String getTwitterOAuthKey() {
-		return this.getValue("eureka.webapp.twitteroauthkey");
-	}
-
-	public String getTwitterOAuthSecret() {
-		return this.getValue("eureka.webapp.twitteroauthsecret");
-	}
-
-	public String getGlobusOAuthKey() {
-		return this.getValue("eureka.webapp.globusoauthkey");
-	}
-
-	public String getGlobusOAuthSecret() {
-		return this.getValue("eureka.webapp.globusoauthsecret");
 	}
 
 	/**
