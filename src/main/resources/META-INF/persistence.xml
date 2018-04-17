@@ -77,7 +77,7 @@
       <!--<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />-->
       <!--<property name="hibernate.show_sql" value="true"/>-->
       <property name="hibernate.hbm2ddl.auto" value="${hibernate-hbm2ddl-auto}"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> 
+	  <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
       <!--<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />-->
       <!-- Default is false for backwards compatibility. Should be used on all
 				new projects -->
