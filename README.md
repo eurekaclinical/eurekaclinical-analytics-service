@@ -5,9 +5,9 @@
 It provides backend services for managing phenotypes, cohorts and running phenotyping jobs.
 
 ## Version 3.0 development series
-Latest release: [![Latest release](https://maven-badges.herokuapp.com/maven-central/org.eurekaclinical/eureka-services/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.eurekaclinical/eureka-services)
+Latest release: [![Latest release](https://maven-badges.herokuapp.com/maven-central/org.eurekaclinical/eurekaclinical-analytics-service/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.eurekaclinical/eurekaclinical-analytics-service)
 
-Version 3 will refactor the `eureka-services` and `eureka-protempa-etl` modules to migrate from a layer architecture to a microservice architecture. It also will improve performance.
+Version 3 will refactor the `eureka-services` and `eureka-protempa-etl` modules to migrate from a layer architecture to a microservice architecture `eurekaclinical-analytics-service` and `eurekaclinical-protempa-service`. It also will improve performance.
 
 ## Version history
 ### Version 2.5.2
@@ -24,8 +24,8 @@ The initial version of the Eureka backend is implemented as a layer architecture
 * [Oracle Java JRE 8](http://www.oracle.com/technetwork/java/javase/overview/index.html)
 * [Tomcat 7](https://tomcat.apache.org)
 * Also running
-  * The [eureka-webapp](https://github.com/eurekaclinical/eureka/tree/master/eureka-webapp) war
-  * The [eureka-protempa-etl](https://github.com/eurekaclinical/eureka/tree/master/eureka-protempa-etl) war
+  * The [eurekaclinical-analytics-webapp](https://github.com/eurekaclinical/eurekaclinical-analytics-webapp) war
+  * The [eurekaclinical-protempa-service](https://github.com/eurekaclinical/eurekaclinical-protempa-service) war
   * The [eurekaclinical-user-webapp](https://github.com/eurekaclinical/eurekaclinical-user-webapp) war
   * The [eurekaclinical-user-service](https://github.com/eurekaclinical/eurekaclinical-user-service) war
   * The [cas-server](https://github.com/eurekaclinical/cas) war
@@ -138,7 +138,7 @@ Submits a job. A JobSpec object is passed in as the body of the request. Returns
 ##### GET `/api/protected/jobs/{id}`
 Gets the Job with the specified numerical unique id.
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/jobs/1
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/jobs/1
 
 Return: 
 ```
@@ -169,7 +169,7 @@ Return:
 Gets all jobs for the current user. Optionally, you can specify whether jobs will be returned in ascending or descending order.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/jobs?order=desc
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/jobs?order=desc
 
 Return:
 ```
@@ -231,7 +231,7 @@ Gets a Statistics object for the specified Job, optionally constraining the resu
 Gets the most recently submitted Job for the user.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/jobs/latest
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/jobs/latest
 
 Returns:
 ```
@@ -354,7 +354,7 @@ Gets all data destinations visible to the current user.  Optionally, filter the 
 * `PATIENT_SET_SENDER`: patient set sender.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/destinations?type=I2B2
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/destinations?type=I2B2
 
 Returns:
 ```
@@ -414,7 +414,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 Returns a list of possible frequency types in ascending order.
 
 ##### Example:
-URL: https://localhost:8443/eureka-services/api/protected/frequencytypes
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/frequencytypes
 
 Returns:
 ```
@@ -436,7 +436,7 @@ Returns:
 Returns the frequency type with the specified numerical unique id.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/frequencytypes/1
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/frequencytypes/1
 
 Returns:
 ```
@@ -451,7 +451,7 @@ Returns:
 Returns the frequency type with the specified unique name.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/frequencytypes/byname/at%20least
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/frequencytypes/byname/at%20least
 
 Returns:
 ```
@@ -485,7 +485,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 ##### GET `/api/protected/relationops`
 Gets a list of the possible temporal relation operators in rank order.
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/relationops
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/relationops
 
 Returns: 
 ```
@@ -515,7 +515,7 @@ Returns:
 Returns the temporal relation operator with the specified numerical unique id.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/relationops/1
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/relationops/1
 
 Returns:
 ```
@@ -526,7 +526,7 @@ Returns:
 Returns the temporal relation operator with the specified unique name.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/relationops/byname/before
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/relationops/byname/before
 
 Returns: 
 ```
@@ -550,7 +550,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 Gets a list of the supported value threshold operators.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/thresholdsops
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/thresholdsops
 
 Returns:
 ```
@@ -561,7 +561,7 @@ Returns:
 Returns the value threshold operator with the specified numerical unique id.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/thresholdsops/1
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/thresholdsops/1
 
 Returns:
 ```
@@ -572,7 +572,7 @@ Returns:
 Returns the value threshold operator with the specified unique name.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/thresholdsops/byname/any
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/thresholdsops/byname/any
 
 Returns:
 ```
@@ -601,7 +601,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 Gets a list of the supported value comparators in rank order.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/valuecomps
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/valuecomps
 
 Returns:
 ```
@@ -642,7 +642,7 @@ Returns:
 Returns the value comparator operator with the specified numerical unique id.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/valuecomps/1
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/valuecomps/1
 
 Returns:
 ```
@@ -653,7 +653,7 @@ Returns:
 Returns the value comparator operator with the specified unique name.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/valuecomps/byname/=
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/valuecomps/byname/=
 
 Returns:
 ```
@@ -682,7 +682,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 Gets an array of the supported time units in rank order.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/timeunits
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/timeunits
 
 Returns:
 ```
@@ -697,7 +697,7 @@ Returns:
 Returns the time unit with the specified numerical unique id.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/timeunits/1
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/timeunits/1
 
 Returns:
 ```
@@ -708,7 +708,7 @@ Returns:
 Returns the time unit with the specified unique name.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/timeunits/byname/day
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/timeunits/byname/day
 
 Returns:
 ```
@@ -819,7 +819,7 @@ Returns the source configuration with the specified numerical unique id.
 Gets a list of the available source configurations' parameter names and values.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/sourceconfig/parameters/list
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/sourceconfig/parameters/list
 
 Returns:
 ```
@@ -960,7 +960,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 Returns the concepts accessible by the current user. Optionally, return each concept in a summarized form suitable for listing.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/phenotypes?summarize=yes
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/phenotypes?summarize=yes
 
 Return:
 ```
@@ -1016,7 +1016,7 @@ Return:
 Returns the concept with the specified key. Optionally, return each concept in a summarized form suitable for listing.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/phenotypes/USER:testCategorization?summarize=yes
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/phenotypes/USER:testCategorization?summarize=yes
 
 Returns:
 ```
@@ -1111,7 +1111,7 @@ Uses status codes as specified in the [Eureka! Clinical microservice specificati
 Returns the top-level system concepts accessible by the current user. Optionally, return each concept in a summarized form suitable for listing.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/concepts
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/concepts
 
 Returns: 
 ```
@@ -1200,7 +1200,7 @@ Form parameters:
 Gets the requested system concept with the specified key or the 404 (NOT FOUND) status code if no such system concept exists and is accessible to the current user. 
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/concepts/Patient
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/concepts/Patient
 
 Returns:
 ```
@@ -1225,7 +1225,7 @@ Returns:
 Gets the concepts with the specified text in their display name, case insensitive.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/concepts/propsearch/ICD9%20Procedure%20Codes
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/concepts/propsearch/ICD9%20Procedure%20Codes
 
 Returns: 
 ```
@@ -1252,7 +1252,7 @@ Returns:
 Gets an array of the keys of the system concepts with the specified text in their display name, case insensitive.
 
 ###### Example:
-URL: https://localhost:8443/eureka-services/api/protected/concepts/search/ICD10:Diagnoses
+URL: https://localhost:8443/eurekaclinical-analytics-service/api/protected/concepts/search/ICD10:Diagnoses
 
 Returns:
 ```
@@ -1274,7 +1274,7 @@ This webapp is configured using a properties file located at `/etc/eureka/applic
 * `eureka.common.ephiprohibited`: true or false depending on whether to display that managing ePHI is prohibited; default is true.
 * `eureka.support.uri`: URI link for contacting support. Could be http, https, or mailto.
 * `eureka.support.uri.name`: Display name of the URI link for contacting support.
-* `eureka.services.url`: URL of the server running the services layer; default is https://localhost:8443/eureka-services.
+* `eureka.services.url`: URL of the server running the services layer; default is https://localhost:8443/eurekaclinical-analytics-service.
 * `eureka.services.callbackserver`: URL of the server running the services layer; default is https://localhost:8443.
 * `eureka.services.defaultprops`: concept subtrees to show in the concept tree: default is Patient PatientDetails Encounter  ICD9:Diagnoses ICD9:Procedures ICD10:Diagnoses ICD10:Procedures LAB:LabTest MED:medications VitalSign
 
@@ -1283,20 +1283,20 @@ A Tomcat restart is required to detect any changes to the configuration file.
 ### WAR installation
 1) Stop Tomcat.
 2) Remove any old copies of the unpacked war from Tomcat's webapps directory.
-3) Copy the warfile into the Tomcat webapps directory, renaming it to remove the version if necessary. For example, rename `eureka-services-1.0.war` to `eureka-services.war`.
+3) Copy the warfile into the Tomcat webapps directory, renaming it to remove the version if necessary. For example, rename `eurekaclinical-analytics-service-1.0.war` to `eurekaclinical-analytics-service.war`.
 4) Start Tomcat.
 
 ## Maven dependency
 ```
 <dependency>
     <groupId>org.eurekaclinical</groupId>
-    <artifactId>eureka-services</artifactId>
+    <artifactId>eurekaclinical-analytics-service</artifactId>
     <version>version</version>
 </dependency>
 ```
 
 ## Developer documentation
-* [Javadoc for latest development release](http://javadoc.io/doc/org.eurekaclinical/eureka-services) [![Javadocs](http://javadoc.io/badge/org.eurekaclinical/eureka-services.svg)](http://javadoc.io/doc/org.eurekaclinical/eureka-services)
+* [Javadoc for latest development release](http://javadoc.io/doc/org.eurekaclinical/eurekaclinical-analytics-service) [![Javadocs](http://javadoc.io/badge/org.eurekaclinical/eurekaclinical-analytics-service.svg)](http://javadoc.io/doc/org.eurekaclinical/eurekaclinical-analytics-service)
 
 ## Getting help
 Feel free to contact us at help@eurekaclinical.org.
