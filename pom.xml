@@ -5,7 +5,7 @@
     <artifactId>eurekaclinical-analytics-service</artifactId>
     <version>1.0-Alpha-3-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Eureka! Clinical Analytics Services</name>
+    <name>Eureka! Clinical Analytics Service</name>
     <description>Eureka! Clinical Analytics Services is the middle services layer
         of the Eureka! Clinical Analytics application.
     </description>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.eurekaclinical</groupId>
         <artifactId>eurekaclinical-parent-standard-deps</artifactId>
-        <version>3-Alpha-2</version>
+        <version>3</version>
     </parent>
 
     <properties>
@@ -22,9 +22,12 @@
         <tomcat.httpsPort>8443</tomcat.httpsPort>        
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <commons-codec-version>1.4</commons-codec-version>
-        <eurekaclinical-protempa-service-version>1.0-Alpha-2</eurekaclinical-protempa-service-version>
-        <cas-mock-version>2.1-Beta-1</cas-mock-version>
-        <eurekaclinical-ontology-version>2.0</eurekaclinical-ontology-version>
+        <eurekaclinical-protempa-client-version>1.0</eurekaclinical-protempa-client-version>
+        <eurekaclinical-protempa-service-version>1.0.1</eurekaclinical-protempa-service-version>
+        <eureka-client-version>3.1</eureka-client-version>
+        <protempa-version>4.0</protempa-version>
+        <cas-mock-version>2.1</cas-mock-version>
+        <eurekaclinical-ontology-version>2.0.2</eurekaclinical-ontology-version>
         <aiw-i2b2-etl-version>3.0</aiw-i2b2-etl-version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
@@ -132,9 +135,6 @@
     <profiles>
         <profile>
             <id>tomcat</id>
-            <properties>
-                <tomcat.httpsPort>8443</tomcat.httpsPort>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -451,7 +451,7 @@
         <dependency>
             <groupId>org.eurekaclinical</groupId>
             <artifactId>protempa-framework</artifactId>
-            <version>4.0</version>
+            <version>${protempa-version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -461,7 +461,7 @@
         <dependency>
             <groupId>org.eurekaclinical</groupId>
             <artifactId>eureka-client</artifactId>
-            <version>3.0</version>
+            <version>${eureka-client-version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -488,7 +488,7 @@
         <dependency>
             <groupId>org.eurekaclinical</groupId>
             <artifactId>eurekaclinical-protempa-client</artifactId>
-            <version>1.0-Alpha-1</version>
+            <version>${eurekaclinical-protempa-client-version}</version>
         </dependency>
     </dependencies>
 </project>
