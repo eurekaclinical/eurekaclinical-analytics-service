@@ -26,7 +26,7 @@
         <eurekaclinical-protempa-service-version>1.1-Beta-26</eurekaclinical-protempa-service-version>
         <eurekaclinical-standard-apis-version>2.2-Beta-1</eurekaclinical-standard-apis-version>
         <eurekaclinical-common-version>3.1-Beta-3</eurekaclinical-common-version>
-        <eureka-client-version>4.0-Beta-2</eureka-client-version>
+        <eureka-client-version>4.0-Beta-4</eureka-client-version>
         <protempa-version>5.0-Beta-10</protempa-version>
         <cas-mock-version>2.1</cas-mock-version>
         <eurekaclinical-ontology-version>2.0.2</eurekaclinical-ontology-version>
