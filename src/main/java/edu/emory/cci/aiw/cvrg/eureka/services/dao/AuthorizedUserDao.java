@@ -1,10 +1,10 @@
-package edu.emory.cci.aiw.cvrg.eureka.services.entity;
+package edu.emory.cci.aiw.cvrg.eureka.services.dao;
 
 /*
  * #%L
- * Eureka Services
+ * Eureka Common
  * %%
- * Copyright (C) 2012 - 2014 Emory University
+ * Copyright (C) 2012 - 2015 Emory University
  * %%
  * This program is dual licensed under the Apache 2 and GPLv3 licenses.
  * 
@@ -39,16 +39,17 @@ package edu.emory.cci.aiw.cvrg.eureka.services.entity;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-//import edu.emory.cci.aiw.cvrg.eureka.common.entity.UserEntity;
+
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity;
+import org.eurekaclinical.standardapis.dao.UserDao;
 
 /**
+ * A data access object interface for working with {@link UserEntity} objects in the
+ * data store.
  *
- * @author Andrew Post
+ * @author hrathod
+ *
  */
-public final class UserEntityFactory {
+public interface AuthorizedUserDao extends UserDao<AuthorizedUserEntity> {
 	
-	
-	public AuthorizedUserEntity getUserEntityInstance() {
-		return new AuthorizedUserEntity();
-	}
 }

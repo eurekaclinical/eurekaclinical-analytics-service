@@ -48,6 +48,7 @@ import javax.persistence.Table;
 
 import javax.persistence.Column;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.eurekaclinical.standardapis.entity.RoleEntity;
 
 /**
  * A bean class to hold information related to roles in the system.
@@ -57,16 +58,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @Table(name = "roles")
-public class RoleEntity implements org.eurekaclinical.standardapis.entity.RoleEntity {
+public class AuthorizedRoleEntity implements RoleEntity {
 
 	/**
 	 * The role's unique identifier.
 	 */
 	@Id
-	@SequenceGenerator(name = "ROLE_SEQ_GENERATOR", sequenceName = "ROLE_SEQ",
+	@SequenceGenerator(name = "ROLE_SEQ_GENERATOR2", sequenceName = "ROLE_SEQ",
 			allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
-			generator = "ROLE_SEQ_GENERATOR")
+			generator = "ROLE_SEQ_GENERATOR2")
 	private Long id;
 	/**
 	 * The role's name.
@@ -77,6 +78,13 @@ public class RoleEntity implements org.eurekaclinical.standardapis.entity.RoleEn
 	 * Is this role a default role? Default roles are assigned to all new users.
 	 */
 	private boolean defaultRole;
+
+	/**
+	 * Create an empty role.
+	 */
+	public AuthorizedRoleEntity() {
+		super();
+	}
 
 	/**
 	 * Get the role's identification number.
@@ -147,9 +155,9 @@ public class RoleEntity implements org.eurekaclinical.standardapis.entity.RoleEn
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof RoleEntity)) return false;
+		if (!(o instanceof AuthorizedRoleEntity)) return false;
 
-		RoleEntity role = (RoleEntity) o;
+		AuthorizedRoleEntity role = (AuthorizedRoleEntity) o;
 
 		if (defaultRole != role.defaultRole) return false;
 		if (!id.equals(role.id)) return false;

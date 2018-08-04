@@ -39,17 +39,17 @@
  */
 package edu.emory.cci.aiw.cvrg.eureka.services.dao;
 
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.RoleEntity;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 
 //import edu.emory.cci.aiw.cvrg.eureka.common.entity.RoleEntity;
 
 /**
- * A data access object interface for working with {@link RoleEntity} objects in the
+ * A data access object interface for working with {@link AuthorizedRoleEntity} objects in the
  * data store.
  *
  * @author hrathod
  *
  */
-public interface RoleDao extends org.eurekaclinical.standardapis.dao.RoleDao<RoleEntity> {
+public interface RoleDao extends org.eurekaclinical.standardapis.dao.RoleDao<AuthorizedRoleEntity> {
 
 }

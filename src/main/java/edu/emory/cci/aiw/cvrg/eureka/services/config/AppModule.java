@@ -47,6 +47,7 @@ import javax.naming.InitialContext;
 import com.google.inject.TypeLiteral;
 import com.google.inject.jndi.JndiIntegration;
 import com.google.inject.servlet.SessionScoped;
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
 
 import org.eurekaclinical.protempa.client.EurekaClinicalProtempaClient;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.FrequencyTypeDao;
@@ -87,7 +88,7 @@ class AppModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(new TypeLiteral<UserDao<? extends UserEntity<? extends RoleEntity>>>() {}).to(JpaUserDao.class);
-		bind(edu.emory.cci.aiw.cvrg.eureka.services.dao.UserDao.class).to(JpaUserDao.class);
+		bind(AuthorizedUserDao.class).to(JpaUserDao.class);
 		bind(RoleDao.class).to(JpaRoleDao.class);
 		bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
 		bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);

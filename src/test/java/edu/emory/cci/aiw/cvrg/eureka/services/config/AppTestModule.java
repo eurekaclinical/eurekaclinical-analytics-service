@@ -42,7 +42,7 @@ package edu.emory.cci.aiw.cvrg.eureka.services.config;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.persist.jpa.JpaPersistModule;
-
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
 
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.FrequencyTypeDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaFrequencyTypeDao;
@@ -57,7 +57,6 @@ import edu.emory.cci.aiw.cvrg.eureka.services.dao.RelationOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.RoleDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.ThresholdsOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.TimeUnitDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.UserDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.ValueComparatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.PropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.TestPropositionFinder;
@@ -71,20 +70,21 @@ import edu.emory.cci.aiw.cvrg.eureka.services.dao.PhenotypeEntityDao;
  */
 public class AppTestModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
+    @Override
+    protected void configure() {
 
-		install(new JpaPersistModule("services-jpa-unit"));
+        install(new JpaPersistModule("services-jpa-unit"));
 
-		bind(UserDao.class).to(JpaUserDao.class);
-		bind(org.eurekaclinical.standardapis.dao.UserDao.class).to(JpaUserDao.class);
-		bind(RoleDao.class).to(JpaRoleDao.class);
-		bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);
-		bind(ValueComparatorDao.class).to(JpaValueComparatorDao.class);
-		bind(FrequencyTypeDao.class).to(JpaFrequencyTypeDao.class);
-		bind(RelationOperatorDao.class).to(JpaRelationOperatorDao.class);
-		bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
-		bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
-		bind(new TypeLiteral<PropositionFinder<String>>(){}).to(TestPropositionFinder.class);
-	}
+        bind(AuthorizedUserDao.class).to(JpaUserDao.class);
+        bind(org.eurekaclinical.standardapis.dao.UserDao.class).to(JpaUserDao.class);
+        bind(RoleDao.class).to(JpaRoleDao.class);
+        bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);
+        bind(ValueComparatorDao.class).to(JpaValueComparatorDao.class);
+        bind(FrequencyTypeDao.class).to(JpaFrequencyTypeDao.class);
+        bind(RelationOperatorDao.class).to(JpaRelationOperatorDao.class);
+        bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
+        bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
+        bind(new TypeLiteral<PropositionFinder<String>>() {
+        }).to(TestPropositionFinder.class);
+    }
 }

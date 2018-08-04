@@ -39,7 +39,7 @@
  */
 package edu.emory.cci.aiw.cvrg.eureka.services.dao;
 
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.UserEntity;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.test.AbstractServiceDataTest;
 import org.junit.Test;
 
@@ -54,28 +54,27 @@ import static org.junit.Assert.assertEquals;
  */
 public class UserDaoTest extends AbstractServiceDataTest {
 
-	/**
-	 * Test the number of objects returned by the data access object. The number should match the number of users
-	 * seeded in
-	 * the class constructor.
-	 */
-	@Test
-	public void testDao() {
-		UserDao dao = this.getInstance(UserDao.class);
-		List<UserEntity> users = dao.getAll();
-		assertEquals(2, users.size());
-	}
+    /**
+     * Test the number of objects returned by the data access object. The number
+     * should match the number of users seeded in the class constructor.
+     */
+    @Test
+    public void testDao() {
+        AuthorizedUserDao dao = this.getInstance(AuthorizedUserDao.class);
+        List<AuthorizedUserEntity> users = dao.getAll();
+        assertEquals(2, users.size());
+    }
 
-	/**
-	 * Tests the ability to get a User by their username from the DAO.
-	 */
-	@Test
-	public void testGetByName() {
-		UserDao dao = this.getInstance(UserDao.class);
-		List<UserEntity> users = dao.getAll();
-		UserEntity user = users.get(0);
-		UserEntity testUser = dao.getByName(user.getUsername());
-		assertEquals(user.getUsername(), testUser.getUsername());
-	}
+    /**
+     * Tests the ability to get a User by their username from the DAO.
+     */
+    @Test
+    public void testGetByName() {
+        AuthorizedUserDao dao = this.getInstance(AuthorizedUserDao.class);
+        List<AuthorizedUserEntity> users = dao.getAll();
+        AuthorizedUserEntity user = users.get(0);
+        AuthorizedUserEntity testUser = dao.getByName(user.getUsername());
+        assertEquals(user.getUsername(), testUser.getUsername());
+    }
 
 }

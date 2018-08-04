@@ -43,8 +43,8 @@ import javax.persistence.EntityManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity;
 
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.UserEntity;
 import org.eurekaclinical.standardapis.dao.AbstractJpaUserDao;
 
 /**
@@ -53,7 +53,7 @@ import org.eurekaclinical.standardapis.dao.AbstractJpaUserDao;
  *
  * @author hrathod
  */
-public class JpaUserDao extends AbstractJpaUserDao<UserEntity> implements UserDao {
+public class JpaUserDao extends AbstractJpaUserDao<AuthorizedUserEntity> implements AuthorizedUserDao {
 
 	/**
 	 * Create an object with the give entity manager.
@@ -63,7 +63,7 @@ public class JpaUserDao extends AbstractJpaUserDao<UserEntity> implements UserDa
 	 */
 	@Inject
 	public JpaUserDao(Provider<EntityManager> inEMProvider) {
-		super(UserEntity.class, inEMProvider);
+		super(AuthorizedUserEntity.class, inEMProvider);
 	}
 	
 }

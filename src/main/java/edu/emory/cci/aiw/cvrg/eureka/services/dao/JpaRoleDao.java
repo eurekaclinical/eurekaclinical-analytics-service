@@ -45,7 +45,7 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.RoleEntity;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 
 //import edu.emory.cci.aiw.cvrg.eureka.common.entity.RoleEntity;
 import org.eurekaclinical.standardapis.dao.AbstractJpaRoleDao;
@@ -56,7 +56,7 @@ import org.eurekaclinical.standardapis.dao.AbstractJpaRoleDao;
  * @author hrathod
  *
  */
-public class JpaRoleDao extends AbstractJpaRoleDao<RoleEntity> implements RoleDao {
+public class JpaRoleDao extends AbstractJpaRoleDao<AuthorizedRoleEntity> implements RoleDao {
 
 	/**
 	 * Create a new object with the given entity manager.
@@ -65,7 +65,7 @@ public class JpaRoleDao extends AbstractJpaRoleDao<RoleEntity> implements RoleDa
 	 */
 	@Inject
 	public JpaRoleDao(Provider<EntityManager> inManagerProvider) {
-		super(RoleEntity.class, inManagerProvider);
+		super(AuthorizedRoleEntity.class, inManagerProvider);
 	}
 
 }

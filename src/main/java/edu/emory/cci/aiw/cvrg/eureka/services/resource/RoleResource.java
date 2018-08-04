@@ -44,7 +44,7 @@ import com.google.inject.persist.Transactional;
 
 //import edu.emory.cci.aiw.cvrg.eureka.common.entity.RoleEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.RoleDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.RoleEntity;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -52,14 +52,14 @@ import org.eurekaclinical.common.comm.Role;
 import org.eurekaclinical.common.resource.AbstractRoleResource;
 
 /**
- * A RESTful end-point for working with {@link RoleEntity} objects.
+ * A RESTful end-point for working with {@link AuthorizedRoleEntity} objects.
  *
  * @author hrathod
  *
  */
 @Transactional
 @Path("/protected/roles")
-public class RoleResource extends AbstractRoleResource<RoleEntity, Role> {
+public class RoleResource extends AbstractRoleResource<AuthorizedRoleEntity, Role> {
 
 	/**
 	 * Create a RoleResource object with the given {@link RoleDao}
@@ -73,7 +73,7 @@ public class RoleResource extends AbstractRoleResource<RoleEntity, Role> {
 	}
 
 	@Override
-	protected Role toComm(RoleEntity roleEntity, HttpServletRequest request) {
+	protected Role toComm(AuthorizedRoleEntity roleEntity, HttpServletRequest request) {
 		Role role = new Role();
 		role.setId(roleEntity.getId());
 		role.setName(roleEntity.getName());

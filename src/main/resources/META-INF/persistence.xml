@@ -54,12 +54,12 @@
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.PropertyConstraint</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.Relation</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.RelationOperator</class>
-    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.RoleEntity</class>
+    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.SequenceEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.SystemProposition</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ThresholdsOperator</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.TimeUnit</class>
-    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.UserEntity</class>
+    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueComparator</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueThresholdEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueThresholdGroupEntity</class>
@@ -77,16 +77,11 @@
       <!--<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />-->
       <!--<property name="hibernate.show_sql" value="true"/>-->
       <property name="hibernate.hbm2ddl.auto" value="${hibernate-hbm2ddl-auto}"/>
-	  <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
+      <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
       <!--<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />-->
       <!-- Default is false for backwards compatibility. Should be used on all
 				new projects -->
-   <property name="hibernate.id.new_generator_mappings" value="true"/>
-    
-    
-   
-    
+      <property name="hibernate.id.new_generator_mappings" value="true"/>
     </properties>
-    
   </persistence-unit>
 </persistence>

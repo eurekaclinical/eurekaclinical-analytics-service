@@ -46,7 +46,6 @@ import org.eurekaclinical.eureka.client.comm.Job;
 import org.eurekaclinical.eureka.client.comm.JobFilter;
 import org.eurekaclinical.eureka.client.comm.JobSpec;
 import org.eurekaclinical.common.comm.clients.ClientException;
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.UserEntity;
 
 import org.eurekaclinical.protempa.client.EurekaClinicalProtempaClient;
 import org.eurekaclinical.protempa.client.comm.JobRequest;
@@ -55,7 +54,7 @@ import edu.emory.cci.aiw.cvrg.eureka.services.config.ServiceProperties;
 import edu.emory.cci.aiw.cvrg.eureka.services.conversion.ConversionSupport;
 import edu.emory.cci.aiw.cvrg.eureka.services.conversion.PropositionDefinitionCollector;
 import edu.emory.cci.aiw.cvrg.eureka.services.conversion.PropositionDefinitionConverterVisitor;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.UserDao;
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
 import org.protempa.PropositionDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +78,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.PhenotypeEntityDao;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity;
 import org.eurekaclinical.standardapis.exception.HttpStatusException;
 
 /**
@@ -100,7 +100,7 @@ public class JobResource {
      * The User data access object to retrieve information about the current
      * user.
      */
-    private final UserDao userDao;
+    private final AuthorizedUserDao userDao;
     /**
      * Used to fetch the user's Propositions, to be sent to the ETL layer when
      * submitting a new job request.
@@ -127,7 +127,7 @@ public class JobResource {
      * @param inEtlClient The ETL client to use to perform ETL operations.
      */
     @Inject
-    public JobResource(UserDao inUserDao,
+    public JobResource(AuthorizedUserDao inUserDao,
             PropositionDefinitionConverterVisitor inVisitor,
             PhenotypeEntityDao inPropositionDao,
             EurekaClinicalProtempaClient inEtlClient,
@@ -153,7 +153,7 @@ public class JobResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response submit(@Context HttpServletRequest request, JobSpec jobSpec) {
         LOGGER.debug("Got job submission: {}", jobSpec);
-        UserEntity user = this.userDao.getByHttpServletRequest(request);
+        AuthorizedUserEntity user = this.userDao.getByHttpServletRequest(request);
         JobRequest jobRequest = new JobRequest();
         PropositionDefinitionCollector collector
                 = PropositionDefinitionCollector.getInstance(

@@ -62,192 +62,191 @@ import org.eurekaclinical.eureka.client.comm.SystemType;
  */
 public class Setup implements TestDataProvider {
 
-	private static final String ORGANIZATION = "Emory University";
-	private static final String PASSWORD = "testpassword";
-	public static final String TESTING_TIME_UNIT_NAME = "test";
-	public static final String TESTING_FREQ_TYPE_NAME = "at least";
-	
-	private final Provider<EntityManager> managerProvider;
-	private RoleEntity researcherRole;
-	private RoleEntity adminRole;
-	private final UserEntityFactory userEntityFactory;
+    private static final String ORGANIZATION = "Emory University";
+    private static final String PASSWORD = "testpassword";
+    public static final String TESTING_TIME_UNIT_NAME = "test";
+    public static final String TESTING_FREQ_TYPE_NAME = "at least";
 
+    private final Provider<EntityManager> managerProvider;
+    private AuthorizedRoleEntity researcherRole;
+    private AuthorizedRoleEntity adminRole;
+    private final UserEntityFactory userEntityFactory;
 
-	/**
-	 * Create a Bootstrap class with an EntityManager.
-	 */
-	@Inject
-	Setup(Provider<EntityManager> inManagerProvider) {
-		this.managerProvider = inManagerProvider;
-		this.userEntityFactory = new UserEntityFactory();
-	}
+    /**
+     * Create a Bootstrap class with an EntityManager.
+     */
+    @Inject
+    Setup(Provider<EntityManager> inManagerProvider) {
+        this.managerProvider = inManagerProvider;
+        this.userEntityFactory = new UserEntityFactory();
+    }
 
-	private EntityManager getEntityManager() {
-		return this.managerProvider.get();
-	}
+    private EntityManager getEntityManager() {
+        return this.managerProvider.get();
+    }
 
-	@Override
-	public void setUp() throws TestDataException {
-		this.researcherRole = this.createResearcherRole();
-		this.adminRole = this.createAdminRole();
-		UserEntity researcherUser = this.createResearcherUser();
-		UserEntity adminUser = this.createAdminUser();
-		this.createPhenotypes(researcherUser, adminUser);
-		this.createTimeUnits();
-		this.createFrequencyTypes();
-	}
+    @Override
+    public void setUp() throws TestDataException {
+        this.researcherRole = this.createResearcherRole();
+        this.adminRole = this.createAdminRole();
+        AuthorizedUserEntity researcherUser = this.createResearcherUser();
+        AuthorizedUserEntity adminUser = this.createAdminUser();
+        this.createPhenotypes(researcherUser, adminUser);
+        this.createTimeUnits();
+        this.createFrequencyTypes();
+    }
 
-	@Override
-	public void tearDown() throws TestDataException {
-		this.remove(PhenotypeEntity.class);
-		this.remove(UserEntity.class);
-		this.remove(RoleEntity.class);
-		this.remove(TimeUnit.class);
-		this.remove(ThresholdsOperator.class);
-		this.remove(FrequencyType.class);
-	}
+    @Override
+    public void tearDown() throws TestDataException {
+        this.remove(PhenotypeEntity.class);
+        this.remove(AuthorizedUserEntity.class);
+        this.remove(AuthorizedRoleEntity.class);
+        this.remove(TimeUnit.class);
+        this.remove(ThresholdsOperator.class);
+        this.remove(FrequencyType.class);
+    }
 
-	private <T> void remove(Class<T> className) {
-		EntityManager entityManager = this.getEntityManager();
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = builder.createQuery(className);
-		criteriaQuery.from(className);
-		TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
-		List<T> entities = query.getResultList();
-		System.out.println("Deleting " + className.getName() + "; count: " +
-				entities.size());
-		entityManager.getTransaction().begin();
-		int i = 1;
-		for (T t : entities) {
-			System.out.println("on " + i++ + "; " + t);
-			entityManager.flush();
-			entityManager.remove(t);
-		}
-		entityManager.getTransaction().commit();
-	}
-	
-	private List<PhenotypeEntity> createPhenotypes(UserEntity... users) {
-		System.out.println("Creating phenotypes...");
-		List<PhenotypeEntity> phenotypes =
-				new ArrayList<>(users.length);
-		EntityManager entityManager = this.getEntityManager();
-		Date now = new Date();
-		ThresholdsOperator any = new ThresholdsOperator();
-		any.setDescription("ANY");
-		any.setName("any");
-		entityManager.getTransaction().begin();
-		entityManager.persist(any);
-		entityManager.getTransaction().commit();
-		
-		for (UserEntity u : users) {
-			entityManager.getTransaction().begin();
-			System.out.println("Loading user " + u.getUsername());
-			CategoryEntity proposition1 = new CategoryEntity();
-			proposition1.setKey("test-cat");
-			proposition1.setDescription("test");
-			proposition1.setDisplayName("Test Proposition");
-			proposition1.setUserId(u.getId());
-			proposition1.setCategoryType(CategoryType.EVENT);
-			proposition1.setCreated(now);
-			entityManager.persist(proposition1);
-			phenotypes.add(proposition1);
-			
-			SystemProposition sysProp = new SystemProposition();
-			sysProp.setUserId(u.getId());
-			sysProp.setSystemType(SystemType.PRIMITIVE_PARAMETER);
-			sysProp.setInSystem(true);
-			sysProp.setKey("test-prim-param");
-			sysProp.setCreated(now);
+    private <T> void remove(Class<T> className) {
+        EntityManager entityManager = this.getEntityManager();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(className);
+        criteriaQuery.from(className);
+        TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+        List<T> entities = query.getResultList();
+        System.out.println("Deleting " + className.getName() + "; count: "
+                + entities.size());
+        entityManager.getTransaction().begin();
+        int i = 1;
+        for (T t : entities) {
+            System.out.println("on " + i++ + "; " + t);
+            entityManager.flush();
+            entityManager.remove(t);
+        }
+        entityManager.getTransaction().commit();
+    }
 
-			ValueThresholdGroupEntity lowLevelAbstraction = 
-					new ValueThresholdGroupEntity();
-			lowLevelAbstraction.setDescription("test-low-level");
-			lowLevelAbstraction.setKey("test-low-level");
-			lowLevelAbstraction.setCreated(now);
-			lowLevelAbstraction.setThresholdsOperator(any);
-			lowLevelAbstraction.setUserId(u.getId());
-			entityManager.persist(lowLevelAbstraction);
-			phenotypes.add(lowLevelAbstraction);
-			entityManager.getTransaction().commit();
-		}
-		
-		System.err.println("Done creating phenotypes!");
-		return phenotypes;
-	}
+    private List<PhenotypeEntity> createPhenotypes(AuthorizedUserEntity... users) {
+        System.out.println("Creating phenotypes...");
+        List<PhenotypeEntity> phenotypes
+                = new ArrayList<>(users.length);
+        EntityManager entityManager = this.getEntityManager();
+        Date now = new Date();
+        ThresholdsOperator any = new ThresholdsOperator();
+        any.setDescription("ANY");
+        any.setName("any");
+        entityManager.getTransaction().begin();
+        entityManager.persist(any);
+        entityManager.getTransaction().commit();
 
-	private UserEntity createResearcherUser() throws TestDataException {
-		return this.createAndPersistUser("user@emory.edu", "Regular", "User",
-				this.researcherRole);
-	}
+        for (AuthorizedUserEntity u : users) {
+            entityManager.getTransaction().begin();
+            System.out.println("Loading user " + u.getUsername());
+            CategoryEntity proposition1 = new CategoryEntity();
+            proposition1.setKey("test-cat");
+            proposition1.setDescription("test");
+            proposition1.setDisplayName("Test Proposition");
+            proposition1.setUserId(u.getId());
+            proposition1.setCategoryType(CategoryType.EVENT);
+            proposition1.setCreated(now);
+            entityManager.persist(proposition1);
+            phenotypes.add(proposition1);
 
-	private UserEntity createAdminUser() throws TestDataException {
-		return this.createAndPersistUser("admin.user@emory.edu", "Admin",
-				"User", this.researcherRole, this.adminRole);
-	}
+            SystemProposition sysProp = new SystemProposition();
+            sysProp.setUserId(u.getId());
+            sysProp.setSystemType(SystemType.PRIMITIVE_PARAMETER);
+            sysProp.setInSystem(true);
+            sysProp.setKey("test-prim-param");
+            sysProp.setCreated(now);
 
-	private UserEntity createAndPersistUser(String email, String firstName,
-	                                  String lastName,
-	                                  RoleEntity... roles) throws
-			TestDataException {
-		EntityManager entityManager = this.getEntityManager();
-		UserEntity user = this.userEntityFactory.getUserEntityInstance();
+            ValueThresholdGroupEntity lowLevelAbstraction
+                    = new ValueThresholdGroupEntity();
+            lowLevelAbstraction.setDescription("test-low-level");
+            lowLevelAbstraction.setKey("test-low-level");
+            lowLevelAbstraction.setCreated(now);
+            lowLevelAbstraction.setThresholdsOperator(any);
+            lowLevelAbstraction.setUserId(u.getId());
+            entityManager.persist(lowLevelAbstraction);
+            phenotypes.add(lowLevelAbstraction);
+            entityManager.getTransaction().commit();
+        }
 
-                user.setUsername(email);
-                user.setRoles(Arrays.asList(roles));
+        System.err.println("Done creating phenotypes!");
+        return phenotypes;
+    }
 
-		entityManager.getTransaction().begin();
-		entityManager.persist(user);
-		entityManager.flush();
-		entityManager.getTransaction().commit();
-		
-		entityManager.getTransaction().begin();
-		entityManager.flush();
-		entityManager.getTransaction().commit();
-		return user;
-	}
+    private AuthorizedUserEntity createResearcherUser() throws TestDataException {
+        return this.createAndPersistUser("user@emory.edu", "Regular", "User",
+                this.researcherRole);
+    }
 
-	private RoleEntity createResearcherRole() {
-		return this.createAndPersistRole("researcher", Boolean.TRUE);
-	}
+    private AuthorizedUserEntity createAdminUser() throws TestDataException {
+        return this.createAndPersistUser("admin.user@emory.edu", "Admin",
+                "User", this.researcherRole, this.adminRole);
+    }
 
-	private RoleEntity createAdminRole() {
-		return this.createAndPersistRole("admin", Boolean.FALSE);
-	}
+    private AuthorizedUserEntity createAndPersistUser(String email, String firstName,
+            String lastName,
+            AuthorizedRoleEntity... roles) throws
+            TestDataException {
+        EntityManager entityManager = this.getEntityManager();
+        AuthorizedUserEntity user = this.userEntityFactory.getUserEntityInstance();
 
-	private RoleEntity createAndPersistRole(String name, Boolean isDefault) {
-		EntityManager entityManager = this.getEntityManager();
-		RoleEntity role = new RoleEntity();
-		role.setName(name);
-		role.setDefaultRole(isDefault);
-		entityManager.getTransaction().begin();
-		entityManager.persist(role);
-		entityManager.flush();
-		entityManager.getTransaction().commit();
-		return role;
-	}
+        user.setUsername(email);
+        user.setRoles(Arrays.asList(roles));
 
-	private List<TimeUnit> createTimeUnits () {
-		EntityManager entityManager = this.getEntityManager();
-		TimeUnit timeUnit = new TimeUnit();
-		timeUnit.setName(TESTING_TIME_UNIT_NAME);
-		timeUnit.setDescription("test timeunit");
-		entityManager.getTransaction().begin();
-		entityManager.persist(timeUnit);
-		entityManager.flush();
-		entityManager.getTransaction().commit();
-		return Collections.singletonList(timeUnit);
-	}
-	
-	private List<FrequencyType> createFrequencyTypes() {
-		EntityManager entityManager = getEntityManager();
-		FrequencyType freqType = new FrequencyType();
-		freqType.setName(TESTING_FREQ_TYPE_NAME);
-		freqType.setDescription("test frequency type");
-		freqType.setRank(1);
-		freqType.setDefault(true);
-		entityManager.getTransaction().begin();
-		entityManager.persist(freqType);
-		entityManager.getTransaction().commit();
-		return Collections.singletonList(freqType);
-	}
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.flush();
+        entityManager.getTransaction().commit();
+
+        entityManager.getTransaction().begin();
+        entityManager.flush();
+        entityManager.getTransaction().commit();
+        return user;
+    }
+
+    private AuthorizedRoleEntity createResearcherRole() {
+        return this.createAndPersistRole("researcher", Boolean.TRUE);
+    }
+
+    private AuthorizedRoleEntity createAdminRole() {
+        return this.createAndPersistRole("admin", Boolean.FALSE);
+    }
+
+    private AuthorizedRoleEntity createAndPersistRole(String name, Boolean isDefault) {
+        EntityManager entityManager = this.getEntityManager();
+        AuthorizedRoleEntity role = new AuthorizedRoleEntity();
+        role.setName(name);
+        role.setDefaultRole(isDefault);
+        entityManager.getTransaction().begin();
+        entityManager.persist(role);
+        entityManager.flush();
+        entityManager.getTransaction().commit();
+        return role;
+    }
+
+    private List<TimeUnit> createTimeUnits() {
+        EntityManager entityManager = this.getEntityManager();
+        TimeUnit timeUnit = new TimeUnit();
+        timeUnit.setName(TESTING_TIME_UNIT_NAME);
+        timeUnit.setDescription("test timeunit");
+        entityManager.getTransaction().begin();
+        entityManager.persist(timeUnit);
+        entityManager.flush();
+        entityManager.getTransaction().commit();
+        return Collections.singletonList(timeUnit);
+    }
+
+    private List<FrequencyType> createFrequencyTypes() {
+        EntityManager entityManager = getEntityManager();
+        FrequencyType freqType = new FrequencyType();
+        freqType.setName(TESTING_FREQ_TYPE_NAME);
+        freqType.setDescription("test frequency type");
+        freqType.setRank(1);
+        freqType.setDefault(true);
+        entityManager.getTransaction().begin();
+        entityManager.persist(freqType);
+        entityManager.getTransaction().commit();
+        return Collections.singletonList(freqType);
+    }
 }
