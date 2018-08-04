@@ -40,20 +40,22 @@
 package edu.emory.cci.aiw.cvrg.eureka.services.dao;
 
 //import edu.emory.cci.aiw.cvrg.eureka.common.entity.ThresholdsOperator;
-import org.eurekaclinical.standardapis.dao.Dao;
 
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.ThresholdsOperator;
+import org.eurekaclinical.standardapis.dao.DaoWithUniqueName;
 
 /**
  *
  */
-public interface ThresholdsOperatorDao  extends
-		Dao<ThresholdsOperator, Long> {
-	/**
-	 * Gets a value definition match operator based on the name attribute.
-	 * @param inName the name to search for in the database
-	 * @return a {@link ThresholdsOperator} with the given name if
-	 * found, null otherwise
-	 */
-	public ThresholdsOperator getByName(String inName);
+public interface ThresholdsOperatorDao extends
+        DaoWithUniqueName<ThresholdsOperator, Long> {
+
+    /**
+     * Gets a value definition match operator based on the name attribute.
+     *
+     * @param inName the name to search for in the database
+     * @return a {@link ThresholdsOperator} with the given name if found, null
+     * otherwise
+     */
+    public ThresholdsOperator getByName(String inName);
 }

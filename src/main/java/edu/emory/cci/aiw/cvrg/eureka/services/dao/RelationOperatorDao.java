@@ -41,15 +41,16 @@ package edu.emory.cci.aiw.cvrg.eureka.services.dao;
 
 //import edu.emory.cci.aiw.cvrg.eureka.common.entity.RelationOperator;
 import java.util.List;
-import org.eurekaclinical.standardapis.dao.Dao;
 
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.RelationOperator;
+import org.eurekaclinical.standardapis.dao.DaoWithUniqueName;
 
 /**
  * @author hrathod
  */
-public interface RelationOperatorDao extends Dao<RelationOperator,Long>  {
-	RelationOperator getByName (String inName);
-	RelationOperator getDefault();
-	List<RelationOperator> getAllAsc();
+public interface RelationOperatorDao extends DaoWithUniqueName<RelationOperator, Long> {
+
+    RelationOperator getDefault();
+
+    List<RelationOperator> getAllAsc();
 }

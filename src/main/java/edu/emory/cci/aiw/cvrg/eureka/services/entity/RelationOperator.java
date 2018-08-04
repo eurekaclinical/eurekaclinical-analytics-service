@@ -53,83 +53,83 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 @Table(name = "relation_ops")
 public class RelationOperator {
-	
-	public static enum Type {
-		SEQUENTIAL,
-		OVERLAPPING
-	}
 
-	@Id
-	@SequenceGenerator(name = "RELATION_OP_SEQ_GENERATOR",
-		sequenceName = "RELATION_OP_SEQ", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,
-		generator = "RELATION_OP_SEQ_GENERATOR")
-	private Long id;
+    public static enum Type {
+        SEQUENTIAL,
+        OVERLAPPING
+    }
 
-	@Column(unique = true, nullable = false)
-	private String name;
-	private String description;
-	
-	@Column(unique = true)
-	private int rank;
-	
-	@Column(nullable = false)
-	private boolean isDefault;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private Type type;
+    @Id
+    @SequenceGenerator(name = "RELATION_OP_SEQ_GENERATOR",
+            sequenceName = "RELATION_OP_SEQ", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "RELATION_OP_SEQ_GENERATOR")
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(unique = true, nullable = false)
+    private String name;
+    private String description;
 
-	public void setId(Long inId) {
-		this.id = inId;
-	}
+    @Column(unique = true)
+    private int rank;
 
-	public String getName() {
-		return name;
-	}
+    @Column(nullable = false)
+    private boolean isDefault;
 
-	public void setName(String inName) {
-		this.name = inName;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Type type;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public String getDescription() {
-		return this.description;
-	}
-	
-	public int getRank() {
-		return this.rank;
-	}
-	
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
-	
-	public boolean isDefault() {
-		return this.isDefault;
-	}
-	
-	public void setDefault(boolean isDefault) {
-		this.isDefault = isDefault;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Type getType() {
-		return type;
-	}
+    public void setId(Long inId) {
+        this.id = inId;
+    }
 
-	public void setType(Type type) {
-		this.type = type;
-	}
-	
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String inName) {
+        this.name = inName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public int getRank() {
+        return this.rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public boolean isDefault() {
+        return this.isDefault;
+    }
+
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

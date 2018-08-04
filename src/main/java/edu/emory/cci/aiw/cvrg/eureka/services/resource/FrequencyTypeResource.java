@@ -62,35 +62,35 @@ import org.eurekaclinical.standardapis.exception.HttpStatusException;
 @Produces(MediaType.APPLICATION_JSON)
 public class FrequencyTypeResource {
 
-	private final FrequencyTypeDao frequencyTypeDao;
+    private final FrequencyTypeDao frequencyTypeDao;
 
-	@Inject
-	public FrequencyTypeResource (FrequencyTypeDao inFrequencyTypeDao) {
-		this.frequencyTypeDao = inFrequencyTypeDao;
-	}
-	
-	@GET
-	public List<FrequencyType> getAllAsc () {
-		return this.frequencyTypeDao.getAllAsc();
-	}
+    @Inject
+    public FrequencyTypeResource(FrequencyTypeDao inFrequencyTypeDao) {
+        this.frequencyTypeDao = inFrequencyTypeDao;
+    }
 
-	@GET
-	@Path("/{id}")
-	public FrequencyType get (@PathParam("id") Long inId) {
-		FrequencyType result = this.frequencyTypeDao.retrieve(inId);
-		if (result == null) {
-			throw new HttpStatusException(Response.Status.NOT_FOUND);
-		}
-		return result;
-	}
-	
-	@GET
-	@Path("/byname/{name}")
-	public FrequencyType getByName(@PathParam("name") String inName) {
-		FrequencyType result = this.frequencyTypeDao.getByName(inName);
-		if (result == null) {
-			throw new HttpStatusException(Response.Status.NOT_FOUND);
-		}
-		return result;
-	}
+    @GET
+    public List<FrequencyType> getAllAsc() {
+        return this.frequencyTypeDao.getAllAsc();
+    }
+
+    @GET
+    @Path("/{id}")
+    public FrequencyType get(@PathParam("id") Long inId) {
+        FrequencyType result = this.frequencyTypeDao.retrieve(inId);
+        if (result == null) {
+            throw new HttpStatusException(Response.Status.NOT_FOUND);
+        }
+        return result;
+    }
+
+    @GET
+    @Path("/byname/{name}")
+    public FrequencyType getByName(@PathParam("name") String inName) {
+        FrequencyType result = this.frequencyTypeDao.getByName(inName);
+        if (result == null) {
+            throw new HttpStatusException(Response.Status.NOT_FOUND);
+        }
+        return result;
+    }
 }

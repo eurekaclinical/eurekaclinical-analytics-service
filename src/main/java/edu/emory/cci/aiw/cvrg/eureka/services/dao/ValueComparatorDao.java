@@ -41,17 +41,11 @@ package edu.emory.cci.aiw.cvrg.eureka.services.dao;
 
 //import edu.emory.cci.aiw.cvrg.eureka.common.entity.ValueComparator;
 import java.util.List;
-import org.eurekaclinical.standardapis.dao.Dao;
 
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueComparator;
+import org.eurekaclinical.standardapis.dao.DaoWithUniqueName;
 
-public interface ValueComparatorDao extends Dao<ValueComparator, Long> {
-	/**
-	 * Gets a value comparator based on the name attribute.
-	 * @param inName the name to search for in the database
-	 * @return a {@link ValueComparator} with the given name if found, null otherwise
-	 */
-	public ValueComparator getByName(String inName);
+public interface ValueComparatorDao extends DaoWithUniqueName<ValueComparator, Long> {
 
-	public List<ValueComparator> getAllAsc();
+    public List<ValueComparator> getAllAsc();
 }

@@ -91,217 +91,217 @@ import org.eurekaclinical.standardapis.exception.HttpStatusException;
 @RolesAllowed({"researcher"})
 public class JobResource {
 
-	/**
-	 * The class level logger.
-	 */
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JobResource.class);
-	/**
-	 * The User data access object to retrieve information about the current
-	 * user.
-	 */
-	private final UserDao userDao;
-	/**
-	 * Used to fetch the user's Propositions, to be sent to the ETL layer when
-	 * submitting a new job request.
-	 */
-	private final PhenotypeEntityDao propositionDao;
-	/**
-	 * Used for converting the different types of Eureka data entities to
-	 * Protempa proposition definitions.
-	 */
-	private final PropositionDefinitionConverterVisitor converterVisitor;
-	private final EurekaClinicalProtempaClient etlClient;
-	private final ConversionSupport conversionSupport;
-	private final ServiceProperties properties;
+    /**
+     * The class level logger.
+     */
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(JobResource.class);
+    /**
+     * The User data access object to retrieve information about the current
+     * user.
+     */
+    private final UserDao userDao;
+    /**
+     * Used to fetch the user's Propositions, to be sent to the ETL layer when
+     * submitting a new job request.
+     */
+    private final PhenotypeEntityDao propositionDao;
+    /**
+     * Used for converting the different types of Eureka data entities to
+     * Protempa proposition definitions.
+     */
+    private final PropositionDefinitionConverterVisitor converterVisitor;
+    private final EurekaClinicalProtempaClient etlClient;
+    private final ConversionSupport conversionSupport;
+    private final ServiceProperties properties;
 
-	/**
-	 * Construct a new job resource with the given job update thread.
-	 *
-	 * @param inUserDao The data access object used to fetch information about
-	 * users.
-	 * @param inVisitor The proposition definition converter visitor that will
-	 * be used to determine how to convert proposition definitions
-	 * @param inPropositionDao The data access object used to fetch information
-	 * about propositions.
-	 * @param inEtlClient The ETL client to use to perform ETL operations.
-	 */
-	@Inject
-	public JobResource(UserDao inUserDao,
-			PropositionDefinitionConverterVisitor inVisitor,
-			PhenotypeEntityDao inPropositionDao,
-			EurekaClinicalProtempaClient inEtlClient,
-			ServiceProperties inProperties) {
-		this.userDao = inUserDao;
-		this.propositionDao = inPropositionDao;
-		this.converterVisitor = inVisitor;
-		this.etlClient = inEtlClient;
-		this.conversionSupport = new ConversionSupport();
-		this.properties = inProperties;
-	}
+    /**
+     * Construct a new job resource with the given job update thread.
+     *
+     * @param inUserDao The data access object used to fetch information about
+     * users.
+     * @param inVisitor The proposition definition converter visitor that will
+     * be used to determine how to convert proposition definitions
+     * @param inPropositionDao The data access object used to fetch information
+     * about propositions.
+     * @param inEtlClient The ETL client to use to perform ETL operations.
+     */
+    @Inject
+    public JobResource(UserDao inUserDao,
+            PropositionDefinitionConverterVisitor inVisitor,
+            PhenotypeEntityDao inPropositionDao,
+            EurekaClinicalProtempaClient inEtlClient,
+            ServiceProperties inProperties) {
+        this.userDao = inUserDao;
+        this.propositionDao = inPropositionDao;
+        this.converterVisitor = inVisitor;
+        this.etlClient = inEtlClient;
+        this.conversionSupport = new ConversionSupport();
+        this.properties = inProperties;
+    }
 
-	/**
-	 * Create a new job (by uploading a new file).
-	 *
-	 * @param jobSpec The file upload to add.
-	 *
-	 * @return A {@link javax.ws.rs.core.Response} indicating the result of the
-	 * operation.
-	 */
-	@Transactional
-	@POST
-	@Consumes({MediaType.APPLICATION_JSON})
-	public Response submit(@Context HttpServletRequest request, JobSpec jobSpec) {
-		LOGGER.debug("Got job submission: {}", jobSpec);
-		UserEntity user = this.userDao.getByHttpServletRequest(request);
-		JobRequest jobRequest = new JobRequest();
-		PropositionDefinitionCollector collector
-				= PropositionDefinitionCollector.getInstance(
-						this.converterVisitor, this.propositionDao
-						.getByUserId(user.getId()));
-		if (LOGGER.isTraceEnabled()) {
-			LOGGER.trace("Sending {} proposition definitions:", collector.getUserPropDefs().size());
-			for (PropositionDefinition pd : collector.getUserPropDefs()) {
-				LOGGER.trace("PropDef: {}", pd);
-			}
-		}
+    /**
+     * Create a new job (by uploading a new file).
+     *
+     * @param jobSpec The file upload to add.
+     *
+     * @return A {@link javax.ws.rs.core.Response} indicating the result of the
+     * operation.
+     */
+    @Transactional
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response submit(@Context HttpServletRequest request, JobSpec jobSpec) {
+        LOGGER.debug("Got job submission: {}", jobSpec);
+        UserEntity user = this.userDao.getByHttpServletRequest(request);
+        JobRequest jobRequest = new JobRequest();
+        PropositionDefinitionCollector collector
+                = PropositionDefinitionCollector.getInstance(
+                        this.converterVisitor, this.propositionDao
+                                .getByUserId(user.getId()));
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("Sending {} proposition definitions:", collector.getUserPropDefs().size());
+            for (PropositionDefinition pd : collector.getUserPropDefs()) {
+                LOGGER.trace("PropDef: {}", pd);
+            }
+        }
 
-		jobRequest.setJobSpec(jobSpec);
-		jobRequest.setUserPropositions(collector.getUserPropDefs());
-		List<String> conceptIds = jobSpec.getPropositionIds();
-		List<String> propIds = new ArrayList<>(conceptIds != null ? conceptIds.size() : 0);
-		if (conceptIds != null) {
-			for (String conceptId : conceptIds) {
-				propIds.add(this.conversionSupport.toPropositionId(conceptId));
-			}
-		}
-		jobRequest.setPropositionIdsToShow(propIds);
+        jobRequest.setJobSpec(jobSpec);
+        jobRequest.setUserPropositions(collector.getUserPropDefs());
+        List<String> conceptIds = jobSpec.getPropositionIds();
+        List<String> propIds = new ArrayList<>(conceptIds != null ? conceptIds.size() : 0);
+        if (conceptIds != null) {
+            for (String conceptId : conceptIds) {
+                propIds.add(this.conversionSupport.toPropositionId(conceptId));
+            }
+        }
+        jobRequest.setPropositionIdsToShow(propIds);
 
-		Long jobId;
-		try {
-			jobId = this.etlClient.submitJob(jobRequest);
-		} catch (ClientException ex) {
-			throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
-		}
+        Long jobId;
+        try {
+            jobId = this.etlClient.submitJob(jobRequest);
+        } catch (ClientException ex) {
+            throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
+        }
 
-		return Response.created(URI.create("/" + jobId)).build();
-	}
+        return Response.created(URI.create("/" + jobId)).build();
+    }
 
-	@GET
-	@Path("/{jobId}")
-	@Produces({MediaType.APPLICATION_JSON})
-	public Job getJob(@PathParam("jobId") Long inJobId) {
-		try {
-			return this.etlClient.getJob(inJobId);
-		} catch (ClientException ex) {
-			ClientResponse.Status responseStatus = ex.getResponseStatus();
-			if (responseStatus == ClientResponse.Status.NOT_FOUND) {
-				throw new HttpStatusException(Status.NOT_FOUND);
-			} else {
-				throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
-			}
-		}
-	}
+    @GET
+    @Path("/{jobId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Job getJob(@PathParam("jobId") Long inJobId) {
+        try {
+            return this.etlClient.getJob(inJobId);
+        } catch (ClientException ex) {
+            ClientResponse.Status responseStatus = ex.getResponseStatus();
+            if (responseStatus == ClientResponse.Status.NOT_FOUND) {
+                throw new HttpStatusException(Status.NOT_FOUND);
+            } else {
+                throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
+            }
+        }
+    }
 
-	@GET
-	@Path("/{jobId}/stats/{key}")
-	@Produces({MediaType.APPLICATION_JSON})
-	public org.eurekaclinical.eureka.client.comm.Statistics getJobStats(@Context HttpServletRequest request,
-			@PathParam("jobId") Long inJobId, @PathParam("key") String key) {
-		try {
-			org.eurekaclinical.eureka.client.comm.Statistics stats = this.etlClient.getJobStats(inJobId, key != null ? this.conversionSupport.toPropositionId(key) : null);
-			org.eurekaclinical.eureka.client.comm.Statistics convertedStats = new org.eurekaclinical.eureka.client.comm.Statistics();
+    @GET
+    @Path("/{jobId}/stats/{key}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public org.eurekaclinical.eureka.client.comm.Statistics getJobStats(@Context HttpServletRequest request,
+            @PathParam("jobId") Long inJobId, @PathParam("key") String key) {
+        try {
+            org.eurekaclinical.eureka.client.comm.Statistics stats = this.etlClient.getJobStats(inJobId, key != null ? this.conversionSupport.toPropositionId(key) : null);
+            org.eurekaclinical.eureka.client.comm.Statistics convertedStats = new org.eurekaclinical.eureka.client.comm.Statistics();
 
-			Map<String, String> childrenToParents = stats.getChildrenToParents();
-			Map<String, String> convertedChildrenToParents = new HashMap<>();
-			for (Map.Entry<String, String> me : childrenToParents.entrySet()) {
-				String phenotypeKey = this.conversionSupport.toPhenotypeKey(me.getKey());
-				String parentKey = me.getValue();
-				if (phenotypeKey != null) {
-					convertedChildrenToParents.put(phenotypeKey, parentKey != null ? this.conversionSupport.toPhenotypeKey(parentKey) : null);
-				}
-			}
-			convertedStats.setChildrenToParents(convertedChildrenToParents);
+            Map<String, String> childrenToParents = stats.getChildrenToParents();
+            Map<String, String> convertedChildrenToParents = new HashMap<>();
+            for (Map.Entry<String, String> me : childrenToParents.entrySet()) {
+                String phenotypeKey = this.conversionSupport.toPhenotypeKey(me.getKey());
+                String parentKey = me.getValue();
+                if (phenotypeKey != null) {
+                    convertedChildrenToParents.put(phenotypeKey, parentKey != null ? this.conversionSupport.toPhenotypeKey(parentKey) : null);
+                }
+            }
+            convertedStats.setChildrenToParents(convertedChildrenToParents);
 
-			Map<String, Integer> counts = stats.getCounts();
-			Map<String, Integer> convertedCounts = new HashMap<>();
-			for (Map.Entry<String, Integer> me : counts.entrySet()) {
-				String phenotypeKey = this.conversionSupport.toPhenotypeKey(me.getKey());
-				if (phenotypeKey != null) {
-					convertedCounts.put(phenotypeKey, me.getValue());
-				}
-			}
-			convertedStats.setCounts(convertedCounts);
-			return convertedStats;
-		} catch (ClientException ex) {
-			ClientResponse.Status responseStatus = ex.getResponseStatus();
-			if (responseStatus == ClientResponse.Status.NOT_FOUND) {
-				throw new HttpStatusException(Status.NOT_FOUND);
-			} else {
-				throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
-			}
-		}
-	}
+            Map<String, Integer> counts = stats.getCounts();
+            Map<String, Integer> convertedCounts = new HashMap<>();
+            for (Map.Entry<String, Integer> me : counts.entrySet()) {
+                String phenotypeKey = this.conversionSupport.toPhenotypeKey(me.getKey());
+                if (phenotypeKey != null) {
+                    convertedCounts.put(phenotypeKey, me.getValue());
+                }
+            }
+            convertedStats.setCounts(convertedCounts);
+            return convertedStats;
+        } catch (ClientException ex) {
+            ClientResponse.Status responseStatus = ex.getResponseStatus();
+            if (responseStatus == ClientResponse.Status.NOT_FOUND) {
+                throw new HttpStatusException(Status.NOT_FOUND);
+            } else {
+                throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
+            }
+        }
+    }
 
-	@GET
-	@Path("/{jobId}/stats")
-	@Produces({MediaType.APPLICATION_JSON})
-	public org.eurekaclinical.eureka.client.comm.Statistics getJobStatsRoot(@Context HttpServletRequest request,
-			@PathParam("jobId") Long inJobId) {
-		return getJobStats(request, inJobId, null);
-	}
+    @GET
+    @Path("/{jobId}/stats")
+    @Produces({MediaType.APPLICATION_JSON})
+    public org.eurekaclinical.eureka.client.comm.Statistics getJobStatsRoot(@Context HttpServletRequest request,
+            @PathParam("jobId") Long inJobId) {
+        return getJobStats(request, inJobId, null);
+    }
 
-	/**
-	 * Get a list of jobs associated with user referred to by the given unique
-	 * identifier.
-	 *
-	 * @param order The order in which to get the user's jobs.
-	 *
-	 * @return A list of {@link Job} objects associated with the user.
-	 */
-	@GET
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<Job> getJobsByUser(@QueryParam("order") String order) {
-		try {
-			if (order == null) {
-				return this.etlClient.getJobs();
-			} else if (order.equals("desc")) {
-				return this.etlClient.getJobsDesc();
-			} else {
-				throw new HttpStatusException(Status.PRECONDITION_FAILED,
-						"Invalid value for the order query parameter: " + order);
-			}
-		} catch (ClientException ex) {
-			throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
-		}
-	}
+    /**
+     * Get a list of jobs associated with user referred to by the given unique
+     * identifier.
+     *
+     * @param order The order in which to get the user's jobs.
+     *
+     * @return A list of {@link Job} objects associated with the user.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Job> getJobsByUser(@QueryParam("order") String order) {
+        try {
+            if (order == null) {
+                return this.etlClient.getJobs();
+            } else if (order.equals("desc")) {
+                return this.etlClient.getJobsDesc();
+            } else {
+                throw new HttpStatusException(Status.PRECONDITION_FAILED,
+                        "Invalid value for the order query parameter: " + order);
+            }
+        } catch (ClientException ex) {
+            throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
+        }
+    }
 
-	/**
-	 * Get the status of the most recent job process for the given user.
-	 *
-	 * @param inFilter The filter to use when fetching the job statuses.
-	 * @return A {@link List} of {@link Job}s containing the status information.
-	 */
-	@GET
-	@Path("/status")
-	@RolesAllowed({"admin"})
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<Job> getStatus(@QueryParam("filter") JobFilter inFilter) {
-		try {
-			return this.etlClient.getJobStatus(inFilter);
-		} catch (ClientException ex) {
-			throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
-		}
-	}
+    /**
+     * Get the status of the most recent job process for the given user.
+     *
+     * @param inFilter The filter to use when fetching the job statuses.
+     * @return A {@link List} of {@link Job}s containing the status information.
+     */
+    @GET
+    @Path("/status")
+    @RolesAllowed({"admin"})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Job> getStatus(@QueryParam("filter") JobFilter inFilter) {
+        try {
+            return this.etlClient.getJobStatus(inFilter);
+        } catch (ClientException ex) {
+            throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
+        }
+    }
 
-	@GET
-	@Path("/latest")
-	@Produces({MediaType.APPLICATION_JSON})
-	public List<Job> getLatestJob() {
-		try {
-			return this.etlClient.getLatestJob();
-		} catch (ClientException ex) {
-			throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
-		}
-	}
+    @GET
+    @Path("/latest")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Job> getLatestJob() {
+        try {
+            return this.etlClient.getLatestJob();
+        } catch (ClientException ex) {
+            throw new HttpStatusException(Status.INTERNAL_SERVER_ERROR, ex);
+        }
+    }
 }

@@ -54,26 +54,25 @@ import org.eurekaclinical.standardapis.dao.GenericDao;
 /**
  * @author hrathod
  */
-public class JpaRelationOperatorDao extends GenericDao<RelationOperator,
-	Long> implements RelationOperatorDao {
+public class JpaRelationOperatorDao extends GenericDao<RelationOperator, Long> implements RelationOperatorDao {
 
-	@Inject
-	public JpaRelationOperatorDao (Provider<EntityManager> inManagerProvider) {
-		super(RelationOperator.class, inManagerProvider);
-	}
+    @Inject
+    public JpaRelationOperatorDao(Provider<EntityManager> inManagerProvider) {
+        super(RelationOperator.class, inManagerProvider);
+    }
 
-	@Override
-	public RelationOperator getByName (String inName) {
-		return this.getUniqueByAttribute(RelationOperator_.name, inName);
-	}
-	
-	@Override
-	public RelationOperator getDefault() {
-		return getUniqueByAttribute(RelationOperator_.isDefault, true);
-	}
-	
-	@Override
-	public List<RelationOperator> getAllAsc() {
-		return getListAsc(RelationOperator_.rank);
-	}
+    @Override
+    public RelationOperator getByName(String inName) {
+        return this.getUniqueByAttribute(RelationOperator_.name, inName);
+    }
+
+    @Override
+    public RelationOperator getDefault() {
+        return getUniqueByAttribute(RelationOperator_.isDefault, true);
+    }
+
+    @Override
+    public List<RelationOperator> getAllAsc() {
+        return getListAsc(RelationOperator_.rank);
+    }
 }
