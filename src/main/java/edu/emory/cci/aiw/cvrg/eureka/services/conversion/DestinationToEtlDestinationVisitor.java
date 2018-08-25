@@ -39,7 +39,6 @@ package edu.emory.cci.aiw.cvrg.eureka.services.conversion;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import org.eurekaclinical.eureka.client.comm.AbstractDestinationVisitor;
 import org.eurekaclinical.eureka.client.comm.Cohort;
 import org.eurekaclinical.eureka.client.comm.CohortDestination;
@@ -50,6 +49,7 @@ import org.eurekaclinical.eureka.client.comm.Neo4jDestination;
 import org.eurekaclinical.eureka.client.comm.PatientSetExtractorDestination;
 import java.util.ArrayList;
 import java.util.List;
+import org.eurekaclinical.eureka.client.comm.PatientListDestination;
 import org.eurekaclinical.eureka.client.comm.PatientSetSenderDestination;
 import org.eurekaclinical.eureka.client.comm.RelDbDestination;
 import org.eurekaclinical.eureka.client.comm.TableColumn;
@@ -59,6 +59,7 @@ import org.eurekaclinical.protempa.client.comm.EtlCohortDestination;
 import org.eurekaclinical.protempa.client.comm.EtlDestination;
 import org.eurekaclinical.protempa.client.comm.EtlI2B2Destination;
 import org.eurekaclinical.protempa.client.comm.EtlNeo4jDestination;
+import org.eurekaclinical.protempa.client.comm.EtlPatientListDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientSetExtractorDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientSetSenderDestination;
 import org.eurekaclinical.protempa.client.comm.EtlTableColumn;
@@ -70,114 +71,121 @@ import org.eurekaclinical.protempa.client.comm.EtlTabularFileDestination;
  */
 public class DestinationToEtlDestinationVisitor extends AbstractDestinationVisitor {
 
-	private EtlDestination etlDestination;
-	private final ConversionSupport conversionSupport;
+    private EtlDestination etlDestination;
+    private final ConversionSupport conversionSupport;
 
-	public DestinationToEtlDestinationVisitor(ConversionSupport inConversionSupport) {
-		this.conversionSupport = inConversionSupport;
-	}
-	
-	@Override
-	public void visit(CohortDestination cohortDestination) {
-		EtlCohortDestination etlCohortDestination = new EtlCohortDestination();
-		visitCommon(cohortDestination, etlCohortDestination);
-		ServicesNodeToEtlNodeVisitor v = new ServicesNodeToEtlNodeVisitor();
-		Cohort servicesCohort = cohortDestination.getCohort();
-		Cohort etlCohort = new Cohort();
-		servicesCohort.getNode().accept(v);
-		etlCohort.setNode(v.getNode());
-		etlCohortDestination.setCohort(etlCohort);
-		this.etlDestination = etlCohortDestination;
-	}
+    public DestinationToEtlDestinationVisitor(ConversionSupport inConversionSupport) {
+        this.conversionSupport = inConversionSupport;
+    }
 
-	@Override
-	public void visit(I2B2Destination i2b2Destination) {
-		EtlI2B2Destination etlI2B2Destination = new EtlI2B2Destination();
-		visitCommon(i2b2Destination, etlI2B2Destination);
-		this.etlDestination = etlI2B2Destination;
-	}
+    @Override
+    public void visit(CohortDestination cohortDestination) {
+        EtlCohortDestination etlCohortDestination = new EtlCohortDestination();
+        visitCommon(cohortDestination, etlCohortDestination);
+        ServicesNodeToEtlNodeVisitor v = new ServicesNodeToEtlNodeVisitor();
+        Cohort servicesCohort = cohortDestination.getCohort();
+        Cohort etlCohort = new Cohort();
+        servicesCohort.getNode().accept(v);
+        etlCohort.setNode(v.getNode());
+        etlCohortDestination.setCohort(etlCohort);
+        this.etlDestination = etlCohortDestination;
+    }
 
-	@Override
-	public void visit(Neo4jDestination neo4jDestination) {
-		EtlNeo4jDestination etlNeo4jDestination = new EtlNeo4jDestination();
-		visitCommon(neo4jDestination, etlNeo4jDestination);
-		etlNeo4jDestination.setDbPath(neo4jDestination.getDbPath());
-		this.etlDestination = etlNeo4jDestination;
-	}
-	
-	public EtlDestination getEtlDestination() {
-		return this.etlDestination;
-	}
+    @Override
+    public void visit(I2B2Destination i2b2Destination) {
+        EtlI2B2Destination etlI2B2Destination = new EtlI2B2Destination();
+        visitCommon(i2b2Destination, etlI2B2Destination);
+        this.etlDestination = etlI2B2Destination;
+    }
 
-	private void visitCommon(Destination destination, EtlDestination etlDestination) {
-		etlDestination.setId(destination.getId());
-		etlDestination.setName(destination.getName());
-		etlDestination.setDescription(destination.getDescription());
-		PhenotypeField[] etlDestPhenotypeFields
-				= destination.getPhenotypeFields();
-		if (etlDestPhenotypeFields != null) {
-			etlDestination.setPhenotypeFields(etlDestPhenotypeFields);
-		}
-		etlDestination.setOwnerUserId(destination.getOwnerUserId());
-		etlDestination.setRead(destination.isRead());
-		etlDestination.setWrite(destination.isWrite());
-		etlDestination.setExecute(destination.isExecute());
-		etlDestination.setLinks(destination.getLinks());
-		etlDestination.setGetStatisticsSupported(destination.isGetStatisticsSupported());
-		List<String> requiredConcepts = destination.getRequiredConcepts();
+    @Override
+    public void visit(Neo4jDestination neo4jDestination) {
+        EtlNeo4jDestination etlNeo4jDestination = new EtlNeo4jDestination();
+        visitCommon(neo4jDestination, etlNeo4jDestination);
+        etlNeo4jDestination.setDbPath(neo4jDestination.getDbPath());
+        this.etlDestination = etlNeo4jDestination;
+    }
 
-		if (requiredConcepts != null) {
-			List<String> requiredPropIds = new ArrayList<>(requiredConcepts.size());
-			for (String requiredConcept : requiredConcepts) {
-				requiredPropIds.add(this.conversionSupport.toPropositionId(requiredConcept));
-			}
-			etlDestination.setRequiredPropositionIds(requiredPropIds);
-		}
-		etlDestination.setAllowingQueryPropositionIds(destination.isJobConceptListSupported());
-	}
+    public EtlDestination getEtlDestination() {
+        return this.etlDestination;
+    }
 
-	@Override
-	public void visit(PatientSetExtractorDestination patientSetExtractorDestination) {
-		EtlPatientSetExtractorDestination etlPtSetExtractorDest = new EtlPatientSetExtractorDestination();
-		etlPtSetExtractorDest.setAliasPropositionId(patientSetExtractorDestination.getAliasPropositionId());
-		etlPtSetExtractorDest.setAliasFieldName(patientSetExtractorDestination.getAliasFieldName());
-		etlPtSetExtractorDest.setAliasFieldNameProperty(patientSetExtractorDestination.getAliasFieldNameProperty());
-		etlPtSetExtractorDest.setAliasPatientIdProperty(patientSetExtractorDestination.getAliasPatientIdProperty());
-		visitCommon(patientSetExtractorDestination, etlPtSetExtractorDest);
-		this.etlDestination = etlPtSetExtractorDest;
-	}
-	
-	@Override
-	public void visit(PatientSetSenderDestination patientSetSenderDestination) {
-		EtlPatientSetSenderDestination etlPtSetSenderDest = new EtlPatientSetSenderDestination();
-		etlPtSetSenderDest.setAliasPropositionId(patientSetSenderDestination.getAliasPropositionId());
-		etlPtSetSenderDest.setAliasFieldName(patientSetSenderDestination.getAliasFieldName());
-		etlPtSetSenderDest.setAliasFieldNameProperty(patientSetSenderDestination.getAliasFieldNameProperty());
-		etlPtSetSenderDest.setAliasPatientIdProperty(patientSetSenderDestination.getAliasPatientIdProperty());
-		etlPtSetSenderDest.setPatientSetService(patientSetSenderDestination.getPatientSetService());
-		visitCommon(patientSetSenderDestination, etlPtSetSenderDest);
-		this.etlDestination = etlPtSetSenderDest;
-	}
+    private void visitCommon(Destination destination, EtlDestination etlDestination) {
+        etlDestination.setId(destination.getId());
+        etlDestination.setName(destination.getName());
+        etlDestination.setDescription(destination.getDescription());
+        PhenotypeField[] etlDestPhenotypeFields
+                = destination.getPhenotypeFields();
+        if (etlDestPhenotypeFields != null) {
+            etlDestination.setPhenotypeFields(etlDestPhenotypeFields);
+        }
+        etlDestination.setOwnerUserId(destination.getOwnerUserId());
+        etlDestination.setRead(destination.isRead());
+        etlDestination.setWrite(destination.isWrite());
+        etlDestination.setExecute(destination.isExecute());
+        etlDestination.setLinks(destination.getLinks());
+        etlDestination.setGetStatisticsSupported(destination.isGetStatisticsSupported());
+        List<String> requiredConcepts = destination.getRequiredConcepts();
 
-	@Override
-	public void visit(TabularFileDestination tabularFileDestination) {
-		EtlTabularFileDestination etlTabularFileDest = new EtlTabularFileDestination();
-		List<EtlTableColumn> etlTableColumns = new ArrayList<>();
-		for (TableColumn tableColumn : tabularFileDestination.getTableColumns()) {
-			EtlTableColumn etlTableColumn = new EtlTableColumn();
-			etlTableColumn.setTableName(tableColumn.getTableName());
-			etlTableColumn.setColumnName(tableColumn.getColumnName());
-			etlTableColumn.setPath(tableColumn.getPath());
-			etlTableColumn.setFormat(tableColumn.getFormat());
-			etlTableColumns.add(etlTableColumn);
-		}
-		etlTabularFileDest.setTableColumns(etlTableColumns);
-		visitCommon(tabularFileDestination, etlTabularFileDest);
-		this.etlDestination = etlTabularFileDest;
-	}
+        if (requiredConcepts != null) {
+            List<String> requiredPropIds = new ArrayList<>(requiredConcepts.size());
+            for (String requiredConcept : requiredConcepts) {
+                requiredPropIds.add(this.conversionSupport.toPropositionId(requiredConcept));
+            }
+            etlDestination.setRequiredPropositionIds(requiredPropIds);
+        }
+        etlDestination.setAllowingQueryPropositionIds(destination.isJobConceptListSupported());
+    }
 
-	@Override
-	public void visit(RelDbDestination relDbDestination) {
-	}
-	
+    @Override
+    public void visit(PatientSetExtractorDestination patientSetExtractorDestination) {
+        EtlPatientSetExtractorDestination etlPtSetExtractorDest = new EtlPatientSetExtractorDestination();
+        etlPtSetExtractorDest.setAliasPropositionId(patientSetExtractorDestination.getAliasPropositionId());
+        etlPtSetExtractorDest.setAliasFieldName(patientSetExtractorDestination.getAliasFieldName());
+        etlPtSetExtractorDest.setAliasFieldNameProperty(patientSetExtractorDestination.getAliasFieldNameProperty());
+        etlPtSetExtractorDest.setAliasPatientIdProperty(patientSetExtractorDestination.getAliasPatientIdProperty());
+        visitCommon(patientSetExtractorDestination, etlPtSetExtractorDest);
+        this.etlDestination = etlPtSetExtractorDest;
+    }
+
+    @Override
+    public void visit(PatientSetSenderDestination patientSetSenderDestination) {
+        EtlPatientSetSenderDestination etlPtSetSenderDest = new EtlPatientSetSenderDestination();
+        etlPtSetSenderDest.setAliasPropositionId(patientSetSenderDestination.getAliasPropositionId());
+        etlPtSetSenderDest.setAliasFieldName(patientSetSenderDestination.getAliasFieldName());
+        etlPtSetSenderDest.setAliasFieldNameProperty(patientSetSenderDestination.getAliasFieldNameProperty());
+        etlPtSetSenderDest.setAliasPatientIdProperty(patientSetSenderDestination.getAliasPatientIdProperty());
+        etlPtSetSenderDest.setPatientSetService(patientSetSenderDestination.getPatientSetService());
+        visitCommon(patientSetSenderDestination, etlPtSetSenderDest);
+        this.etlDestination = etlPtSetSenderDest;
+    }
+
+    @Override
+    public void visit(TabularFileDestination tabularFileDestination) {
+        EtlTabularFileDestination etlTabularFileDest = new EtlTabularFileDestination();
+        List<EtlTableColumn> etlTableColumns = new ArrayList<>();
+        for (TableColumn tableColumn : tabularFileDestination.getTableColumns()) {
+            EtlTableColumn etlTableColumn = new EtlTableColumn();
+            etlTableColumn.setTableName(tableColumn.getTableName());
+            etlTableColumn.setColumnName(tableColumn.getColumnName());
+            etlTableColumn.setPath(tableColumn.getPath());
+            etlTableColumn.setFormat(tableColumn.getFormat());
+            etlTableColumns.add(etlTableColumn);
+        }
+        etlTabularFileDest.setTableColumns(etlTableColumns);
+        visitCommon(tabularFileDestination, etlTabularFileDest);
+        this.etlDestination = etlTabularFileDest;
+    }
+
+    @Override
+    public void visit(RelDbDestination relDbDestination) {
+    }
+
+    @Override
+    public void visit(PatientListDestination patientListDestination) {
+        EtlPatientListDestination result = new EtlPatientListDestination();
+        visitCommon(patientListDestination, result);
+        this.etlDestination = result;
+    }
+    
 }
