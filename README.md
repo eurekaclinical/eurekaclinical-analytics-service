@@ -6,6 +6,9 @@ It provides backend services for managing phenotypes, cohorts and running phenot
 
 Latest release: [![Latest release](https://maven-badges.herokuapp.com/maven-central/org.eurekaclinical/eurekaclinical-analytics-service/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.eurekaclinical/eurekaclinical-analytics-service)
 
+## Version 2.0
+Support the new job modes, and update dependencies.
+
 ## Version 1.0
 This service is a refactoring of the eureka-services module of the eureka project. It replaces the eureka-services module. The current functionality is the same as in the last release of the eureka project.
 
