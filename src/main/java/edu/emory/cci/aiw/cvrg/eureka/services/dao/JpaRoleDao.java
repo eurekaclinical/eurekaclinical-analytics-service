@@ -56,16 +56,16 @@ import org.eurekaclinical.standardapis.dao.AbstractJpaRoleDao;
  * @author hrathod
  *
  */
-public class JpaRoleDao extends AbstractJpaRoleDao<AuthorizedRoleEntity> implements RoleDao {
+public class JpaRoleDao extends AbstractJpaRoleDao<AuthorizedRoleEntity> implements AnalyticsServiceRoleDao {
 
-	/**
-	 * Create a new object with the given entity manager.
-	 *
-	 * @param inManagerProvider A provider for entity manager instances.
-	 */
-	@Inject
-	public JpaRoleDao(Provider<EntityManager> inManagerProvider) {
-		super(AuthorizedRoleEntity.class, inManagerProvider);
-	}
+    /**
+     * Create a new object with the given entity manager.
+     *
+     * @param inManagerProvider A provider for entity manager instances.
+     */
+    @Inject
+    public JpaRoleDao(Provider<EntityManager> inManagerProvider) {
+        super(AuthorizedRoleEntity.class, inManagerProvider);
+    }
 
 }

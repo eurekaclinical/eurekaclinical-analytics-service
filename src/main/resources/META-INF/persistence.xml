@@ -55,14 +55,17 @@
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.Relation</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.RelationOperator</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity</class>
+    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.RoleEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.SequenceEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.SystemProposition</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ThresholdsOperator</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.TimeUnit</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity</class>
+    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.UserEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueComparator</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueThresholdEntity</class>
     <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.ValueThresholdGroupEntity</class>
+    <class>edu.emory.cci.aiw.cvrg.eureka.services.entity.UserTemplateEntity</class>
     <!--
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>

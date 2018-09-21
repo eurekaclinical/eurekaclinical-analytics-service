@@ -40,8 +40,9 @@
 package edu.emory.cci.aiw.cvrg.eureka.services.resource;
 
 import com.google.inject.persist.Transactional;
+
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.AnalyticsServiceRoleDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.RoleDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity;
 import java.util.ArrayList;
@@ -66,21 +67,21 @@ import org.eurekaclinical.common.resource.AbstractUserResource;
 @RolesAllowed({"admin"})
 public class UserResource extends AbstractUserResource<User, AuthorizedUserEntity, AuthorizedRoleEntity> {
 
-	private final RoleDao roleDao;
-	
-	/**
-	 * Create a UserResource object with a User DAO and a Role DAO.
-	 *
-	 * @param inUserDao DAO used to access {@link UserEntity} related functionality.
-	 * @param inRoleDao
-	 */
-	@Inject
-	public UserResource(AuthorizedUserDao inUserDao, RoleDao inRoleDao) {
-		super(inUserDao);
-		this.roleDao = inRoleDao;
-	}
+    private final AnalyticsServiceRoleDao roleDao;
+    
+    /**
+     * Create a UserResource object with a User DAO and a Role DAO.
+     *
+     * @param inUserDao DAO used to access {@link UserEntity} related functionality.
+     * @param inRoleDao
+     */
+    @Inject
+    public UserResource(AuthorizedUserDao inUserDao, AnalyticsServiceRoleDao inRoleDao) {
+        super(inUserDao);
+        this.roleDao = inRoleDao;
+    }
 
-	@Override
+    @Override
     protected User toComm(AuthorizedUserEntity userEntity, HttpServletRequest request) {
         User user = new User();
         user.setId(userEntity.getId());

@@ -1025,5 +1025,35 @@
                         <dropColumn tableName="USERS" columnName="DEPARTMENT"/> 
                         <dropColumn tableName="USERS" columnName="FULLNAME"/>  
                         <dropColumn tableName="USERS" columnName="CREATED"/>                                                                                                                                                                                                                                                            
-                </changeSet>             
+                </changeSet>
+				<changeSet author="dileep" id="1360440238345-105">
+			
+					<createTable tableName="USERTEMPLATES">
+						<column name="ID" type="BIGINT">
+							<constraints nullable="false" primaryKey="true"
+								primaryKeyName="UT_PK" />
+						</column>
+						<column name="NAME" type="VARCHAR(255)">
+							<constraints nullable="false" unique="true"
+								uniqueConstraintName="UT_NAME_UNIQ" />
+						</column>
+						<column name="AUTOAUTHORIZE" type="BOOLEAN">
+							<constraints nullable="false" />
+						</column>
+						<column name="CRITERIA" type="VARCHAR(255)" />
+					</createTable>
+			
+					<createSequence sequenceName="UT_SEQ" />
+			
+					<createTable tableName="USERTEMPLATE_ROLE">
+						<column name="USERTEMPLATE_ID" type="BIGINT">
+							<constraints nullable="false" />
+						</column>
+						<column name="ROLE_ID" type="BIGINT">
+							<constraints nullable="false"  />
+						</column>
+					</createTable>
+						<addForeignKeyConstraint baseColumnNames="USERTEMPLATE_ID" baseTableName="USERTEMPLATE_ROLE" constraintName="FK_UT_ROLE_USERTEMPLATES_FK" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" referencedColumnNames="ID" referencedTableName="USERTEMPLATES" referencesUniqueColumn="false"/>
+						<addForeignKeyConstraint baseColumnNames="USERTEMPLATE_ID" baseTableName="USERTEMPLATE_ROLE" constraintName="FK_UT_ROLE_ROLES_FK" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" referencedColumnNames="ID" referencedTableName="ROLES" referencesUniqueColumn="false"/>
+				</changeSet>             
 </databaseChangeLog>
