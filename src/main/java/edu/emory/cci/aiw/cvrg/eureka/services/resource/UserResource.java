@@ -56,7 +56,7 @@ import org.eurekaclinical.common.comm.User;
 import org.eurekaclinical.common.resource.AbstractUserResource;
 
 /**
- * RESTful end-point for {@link UserEntity} related methods.
+ * RESTful end-point for {@link AuthorizedUserEntity} related methods.
  *
  * @author hrathod
  */
@@ -72,7 +72,7 @@ public class UserResource extends AbstractUserResource<User, AuthorizedUserEntit
     /**
      * Create a UserResource object with a User DAO and a Role DAO.
      *
-     * @param inUserDao DAO used to access {@link UserEntity} related functionality.
+     * @param inUserDao DAO used to access {@link AuthorizedUserEntity} related functionality.
      * @param inRoleDao
      */
     @Inject
