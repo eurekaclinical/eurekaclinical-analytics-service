@@ -47,6 +47,8 @@ import javax.naming.InitialContext;
 import com.google.inject.TypeLiteral;
 import com.google.inject.jndi.JndiIntegration;
 import com.google.inject.servlet.SessionScoped;
+
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.AnalyticsServiceRoleDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
 
 import org.eurekaclinical.protempa.client.EurekaClinicalProtempaClient;
@@ -59,15 +61,20 @@ import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaThresholdsOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaTimeUnitDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaValueComparatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaUserDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.RelationOperatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.RoleDao;
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaUserTemplateDao;
+import edu.emory.cci.aiw.cvrg.eureka.services.dao.RelationOperatorDao; 
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.ThresholdsOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.TimeUnitDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.ValueComparatorDao;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.UserTemplateEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.PropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.SystemPropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.PhenotypeEntityDao;
+
+import org.eurekaclinical.standardapis.dao.RoleDao;
 import org.eurekaclinical.standardapis.dao.UserDao;
+import org.eurekaclinical.standardapis.dao.UserTemplateDao;
 import org.eurekaclinical.standardapis.entity.RoleEntity;
 import org.eurekaclinical.standardapis.entity.UserEntity;
 
@@ -79,34 +86,36 @@ import org.eurekaclinical.standardapis.entity.UserEntity;
  */
 class AppModule extends AbstractModule {
 
-	private final EtlClientProvider etlClientProvider;
-	
-	AppModule(EtlClientProvider inEtlClientProvider) {
-		this.etlClientProvider = inEtlClientProvider;
-	}
+    private final EtlClientProvider etlClientProvider;
+    
+    AppModule(EtlClientProvider inEtlClientProvider) {
+        this.etlClientProvider = inEtlClientProvider;
+    }
 
-	@Override
-	protected void configure() {
-		bind(new TypeLiteral<UserDao<? extends UserEntity<? extends RoleEntity>>>() {}).to(JpaUserDao.class);
-		bind(AuthorizedUserDao.class).to(JpaUserDao.class);
-		bind(RoleDao.class).to(JpaRoleDao.class);
-		bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
-		bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);
-		bind(RelationOperatorDao.class).to(JpaRelationOperatorDao.class);
-		bind(ValueComparatorDao.class).to(JpaValueComparatorDao.class);
-		bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
-		bind(FrequencyTypeDao.class).to(JpaFrequencyTypeDao.class);
-		bind(ThresholdsOperatorDao.class).to
-				(JpaThresholdsOperatorDao.class);
-		bind(new TypeLiteral<PropositionFinder<
-				String>>(){}).to(SystemPropositionFinder.class);
+    @Override
+    protected void configure() {
+        bind(new TypeLiteral<UserDao<? extends UserEntity<? extends RoleEntity>>>() {}).to(JpaUserDao.class);
+        bind(AnalyticsServiceRoleDao.class).to(JpaRoleDao.class); 
+        bind(new TypeLiteral<RoleDao<AuthorizedRoleEntity>>() {}).to(JpaRoleDao.class);
+        bind(new TypeLiteral<UserTemplateDao<AuthorizedRoleEntity, UserTemplateEntity>>() {}).to(JpaUserTemplateDao.class);
+        bind(AuthorizedUserDao.class).to(JpaUserDao.class);
+        bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
+        bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);
+        bind(RelationOperatorDao.class).to(JpaRelationOperatorDao.class);
+        bind(ValueComparatorDao.class).to(JpaValueComparatorDao.class);
+        bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
+        bind(FrequencyTypeDao.class).to(JpaFrequencyTypeDao.class);
+        bind(ThresholdsOperatorDao.class).to
+                (JpaThresholdsOperatorDao.class);
+        bind(new TypeLiteral<PropositionFinder<
+                String>>(){}).to(SystemPropositionFinder.class);
 
-		bind(Context.class).to(InitialContext.class);
-		bind(Session.class).toProvider(
-				JndiIntegration.fromJndi(Session.class,
-						"java:comp/env/mail/Session"));
+        bind(Context.class).to(InitialContext.class);
+        bind(Session.class).toProvider(
+                JndiIntegration.fromJndi(Session.class,
+                        "java:comp/env/mail/Session"));
 
-		bind(EurekaClinicalProtempaClient.class).toProvider(this.etlClientProvider).in(SessionScoped.class);
-	}
+        bind(EurekaClinicalProtempaClient.class).toProvider(this.etlClientProvider).in(SessionScoped.class);
+    }
 
 }

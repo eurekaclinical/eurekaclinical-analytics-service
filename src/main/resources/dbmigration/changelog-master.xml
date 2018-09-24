@@ -1025,5 +1025,64 @@
                         <dropColumn tableName="USERS" columnName="DEPARTMENT"/> 
                         <dropColumn tableName="USERS" columnName="FULLNAME"/>  
                         <dropColumn tableName="USERS" columnName="CREATED"/>                                                                                                                                                                                                                                                            
-                </changeSet>             
+                </changeSet>
+				<changeSet author="dileep" id="1360440238345-105">
+			
+					<createTable tableName="USERTEMPLATES">
+						<column name="ID" type="BIGINT">
+							<constraints nullable="false" primaryKey="true"
+								primaryKeyName="UT_PK" />
+						</column>
+						<column name="NAME" type="VARCHAR(255)">
+							<constraints nullable="false" unique="true"
+								uniqueConstraintName="UT_NAME_UNIQ" />
+						</column>
+						<column name="AUTOAUTHORIZE" type="BOOLEAN">
+							<constraints nullable="false" />
+						</column>
+						<column name="CRITERIA" type="VARCHAR(255)" />
+					</createTable>
+			
+					<createSequence sequenceName="UT_SEQ" />
+			
+					<createTable tableName="USERTEMPLATE_ROLE">
+						<column name="USERTEMPLATE_ID" type="BIGINT">
+							<constraints nullable="false" />
+						</column>
+						<column name="ROLE_ID" type="BIGINT">
+							<constraints nullable="false"  />
+						</column>
+					</createTable>
+                        <addForeignKeyConstraint baseColumnNames="USERTEMPLATE_ID" baseTableName="USERTEMPLATE_ROLE" constraintName="FK_UT_ROLE_USERTEMPLATES_FK" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" referencedColumnNames="ID" referencedTableName="USERTEMPLATES" />
+                        <addForeignKeyConstraint baseColumnNames="USERTEMPLATE_ID" baseTableName="USERTEMPLATE_ROLE" constraintName="FK_UT_ROLE_ROLES_FK"  referencedColumnNames="ID" referencedTableName="ROLES" />
+				</changeSet>    
+				<changeSet id="1360440238345-106" author="dileep">
+                <insert tableName="ROLES">
+                    <column name="ID" valueSequenceNext="ROLE_SEQ"/>
+                    <column name="DEFAULTROLE" valueBoolean="false"/>
+                    <column name="NAME" value="researcher"/>
+                </insert>
+                <rollback>
+                    <delete tableName="ROLES">
+                        <where>NAME='researcher'</where>
+                    </delete>
+                </rollback>
+            </changeSet>
+            <changeSet id="1360440238345-107" author="dileep">
+                <insert tableName="USERTEMPLATES">
+                    <column name="ID" valueSequenceNext="UT_SEQ"/>
+                    <column name="NAME" value="Auto Authorize"/>
+                    <column name="AUTOAUTHORIZE" valueBoolean="true"/>
+                    <column name="CRITERIA"/>
+                </insert>
+                <insert tableName="USERTEMPLATE_ROLE">
+                    <column name="USERTEMPLATE_ID" valueSequenceCurrent="UT_SEQ"/>
+                    <column name="ROLE_ID" valueComputed="(select id from roles where name='researcher')"/>
+                </insert>
+                <rollback>
+                    <delete tableName="USERTEMPLATES">
+                        <where>NAME='Auto Authorize'</where>
+                    </delete>
+                </rollback>
+            </changeSet>         
 </databaseChangeLog>

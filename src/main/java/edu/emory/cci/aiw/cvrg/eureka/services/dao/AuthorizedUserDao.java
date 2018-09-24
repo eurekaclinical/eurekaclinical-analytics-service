@@ -44,7 +44,7 @@ import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedUserEntity;
 import org.eurekaclinical.standardapis.dao.UserDao;
 
 /**
- * A data access object interface for working with {@link UserEntity} objects in the
+ * A data access object interface for working with {@link AuthorizedUserEntity} objects in the
  * data store.
  *
  * @author hrathod
