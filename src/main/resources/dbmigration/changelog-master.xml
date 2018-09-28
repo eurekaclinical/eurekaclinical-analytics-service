@@ -1056,19 +1056,7 @@
                         <addForeignKeyConstraint baseColumnNames="USERTEMPLATE_ID" baseTableName="USERTEMPLATE_ROLE" constraintName="FK_UT_ROLE_USERTEMPLATES_FK" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" referencedColumnNames="ID" referencedTableName="USERTEMPLATES" />
                         <addForeignKeyConstraint baseColumnNames="USERTEMPLATE_ID" baseTableName="USERTEMPLATE_ROLE" constraintName="FK_UT_ROLE_ROLES_FK"  referencedColumnNames="ID" referencedTableName="ROLES" />
 				</changeSet>    
-				<changeSet id="1360440238345-106" author="dileep">
-                <insert tableName="ROLES">
-                    <column name="ID" valueSequenceNext="ROLE_SEQ"/>
-                    <column name="DEFAULTROLE" valueBoolean="false"/>
-                    <column name="NAME" value="researcher"/>
-                </insert>
-                <rollback>
-                    <delete tableName="ROLES">
-                        <where>NAME='researcher'</where>
-                    </delete>
-                </rollback>
-            </changeSet>
-            <changeSet id="1360440238345-107" author="dileep">
+            <changeSet id="1360440238345-106" author="dileep">
                 <insert tableName="USERTEMPLATES">
                     <column name="ID" valueSequenceNext="UT_SEQ"/>
                     <column name="NAME" value="Auto Authorize"/>
