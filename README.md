@@ -28,21 +28,6 @@ This service is a refactoring of the eureka-services module of the eureka projec
 
 ## REST APIs
 
-### `/api/protected/file`
-Manages data file uploads.
-
-#### Role-based authorization
-Must have `research` role.
-
-#### Requires successful authentication
-Yes
-
-#### Calls
-Uses status codes as specified in the [Eureka! Clinical microservice specification](https://github.com/eurekaclinical/dev-wiki/wiki/Eureka%21-Clinical-microservice-specification).
-
-##### POST /protected/file/upload/{sourceConfigId}/{sourceId}
-Submit a multipart form containing a file with form parameter name `file` for the source config with the specified unique name (`sourceConfigId`). The sourceId is a source config-specific identifier for the file.
-
 ### `/api/protected/destinations`
 Manages job actions.
 
