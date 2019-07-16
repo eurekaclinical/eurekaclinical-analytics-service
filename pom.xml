@@ -21,12 +21,12 @@
         <tomcat.port>8080</tomcat.port>
         <tomcat.httpsPort>8443</tomcat.httpsPort>        
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
-        <commons-codec-version>1.4</commons-codec-version>
-        <eurekaclinical-protempa-client-version>3.0-Alpha-2</eurekaclinical-protempa-client-version>
-        <eurekaclinical-protempa-service-version>3.0-Alpha-1</eurekaclinical-protempa-service-version>
+        <commons-codec-version>1.4</commons-codec-version>        
+        <eurekaclinical-protempa-service-version>3.0-Alpha-3</eurekaclinical-protempa-service-version>
+        <eurekaclinical-protempa-client-version>3.0-Alpha-3</eurekaclinical-protempa-client-version>
         <eurekaclinical-standard-apis-version>3.0</eurekaclinical-standard-apis-version>
         <eurekaclinical-common-version>4.0</eurekaclinical-common-version>
-        <eureka-client-version>4.0</eureka-client-version>
+        <eureka-client-version>5.0-Alpha-5</eureka-client-version>
         <protempa-version>5.1-Beta-1</protempa-version>
         <cas-mock-version>2.1</cas-mock-version>
         <eurekaclinical-ontology-version>2.0.2</eurekaclinical-ontology-version>
