@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eurekaclinical</groupId>
     <artifactId>eurekaclinical-analytics-service</artifactId>
-    <version>3.0-Alpha-2-SNAPSHOT</version>
+    <version>3.0-Alpha-4-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Eureka! Clinical Analytics Service</name>
     <description>Eureka! Clinical Analytics Services is the middle services layer
@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.eurekaclinical</groupId>
         <artifactId>eurekaclinical-parent-standard-deps</artifactId>
-        <version>3</version>
+        <version>4-Alpha-3</version>
     </parent>
 
     <properties>
@@ -22,16 +22,16 @@
         <tomcat.httpsPort>8443</tomcat.httpsPort>        
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <commons-codec-version>1.4</commons-codec-version>
-        <eurekaclinical-protempa-client-version>3.0-Alpha-2</eurekaclinical-protempa-client-version>
-        <eurekaclinical-protempa-service-version>3.0-Alpha-1</eurekaclinical-protempa-service-version>
-        <eurekaclinical-standard-apis-version>3.0</eurekaclinical-standard-apis-version>
-        <eurekaclinical-common-version>4.0</eurekaclinical-common-version>
-        <eureka-client-version>4.0</eureka-client-version>
-        <protempa-version>5.1-Beta-1</protempa-version>
-        <cas-mock-version>2.1</cas-mock-version>
-        <eurekaclinical-ontology-version>2.0.2</eurekaclinical-ontology-version>
-        <aiw-i2b2-etl-version>4.0</aiw-i2b2-etl-version>
-        <javautil-version>4.2</javautil-version>
+        <eurekaclinical-protempa-client-version>3.0-Alpha-6</eurekaclinical-protempa-client-version>
+        <eurekaclinical-protempa-service-version>3.0-Alpha-6</eurekaclinical-protempa-service-version>
+        <eurekaclinical-standard-apis-version>4.0-Alpha-5</eurekaclinical-standard-apis-version>
+        <eurekaclinical-common-version>5.0-Alpha-6</eurekaclinical-common-version>
+        <eureka-client-version>5.0-Alpha-7</eureka-client-version>
+        <protempa-version>5.1-Beta-3</protempa-version>
+        <cas-mock-version>2.3</cas-mock-version>
+        <eurekaclinical-ontology-version>2.0.4</eurekaclinical-ontology-version>
+        <aiw-i2b2-etl-version>4.2</aiw-i2b2-etl-version>
+        <javautil-version>4.4</javautil-version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 	

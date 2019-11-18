@@ -56,14 +56,12 @@ import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaRoleDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaThresholdsOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaTimeUnitDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaUserDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaUserTemplateDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaValueComparatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.RelationOperatorDao; 
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.ThresholdsOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.TimeUnitDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.ValueComparatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity; 
-import edu.emory.cci.aiw.cvrg.eureka.services.entity.UserTemplateEntity;
+import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.PropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.TestPropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.PhenotypeEntityDao;
@@ -91,7 +89,6 @@ public class AppTestModule extends AbstractModule {
         bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
         bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
         bind(new TypeLiteral<RoleDao<AuthorizedRoleEntity>>() {}).to(JpaRoleDao.class);
-        bind(new TypeLiteral<UserTemplateDao<AuthorizedRoleEntity, UserTemplateEntity>>() {}).to(JpaUserTemplateDao.class);
         bind(new TypeLiteral<PropositionFinder<String>>() {
         }).to(TestPropositionFinder.class);
     }
