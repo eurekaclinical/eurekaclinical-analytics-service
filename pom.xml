@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.eurekaclinical</groupId>
         <artifactId>eurekaclinical-parent-standard-deps</artifactId>
-        <version>4-Alpha-3</version>
+        <version>4-Alpha-4-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -22,16 +22,16 @@
         <tomcat.httpsPort>8443</tomcat.httpsPort>        
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <commons-codec-version>1.4</commons-codec-version>
-        <eurekaclinical-protempa-client-version>3.0-Alpha-6</eurekaclinical-protempa-client-version>
-        <eurekaclinical-protempa-service-version>3.0-Alpha-6</eurekaclinical-protempa-service-version>
-        <eurekaclinical-standard-apis-version>4.0-Alpha-5</eurekaclinical-standard-apis-version>
-        <eurekaclinical-common-version>5.0-Alpha-6</eurekaclinical-common-version>
-        <eureka-client-version>5.0-Alpha-7</eureka-client-version>
-        <protempa-version>5.1-Beta-3</protempa-version>
-        <cas-mock-version>2.3</cas-mock-version>
-        <eurekaclinical-ontology-version>2.0.4</eurekaclinical-ontology-version>
-        <aiw-i2b2-etl-version>4.2</aiw-i2b2-etl-version>
-        <javautil-version>4.4</javautil-version>
+        <eurekaclinical-protempa-client-version>3.0-Alpha-7-SNAPSHOT</eurekaclinical-protempa-client-version>
+        <eurekaclinical-protempa-service-version>3.0-Alpha-7-SNAPSHOT</eurekaclinical-protempa-service-version>
+        <eurekaclinical-standard-apis-version>4.0-Alpha-6-SNAPSHOT</eurekaclinical-standard-apis-version>
+        <eurekaclinical-common-version>5.0-Alpha-7-SNAPSHOT</eurekaclinical-common-version>
+        <eureka-client-version>5.0-Alpha-8-SNAPSHOT</eureka-client-version>
+        <protempa-version>5.1-Beta-4-SNAPSHOT</protempa-version>
+        <cas-mock-version>2.4-SNAPSHOT</cas-mock-version>
+        <eurekaclinical-ontology-version>2.0.5-SNAPSHOT</eurekaclinical-ontology-version>
+        <aiw-i2b2-etl-version>4.3-SNAPSHOT</aiw-i2b2-etl-version>
+        <javautil-version>4.5-SNAPSHOT</javautil-version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 	
