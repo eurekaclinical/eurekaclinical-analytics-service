@@ -57,10 +57,10 @@ import edu.emory.cci.aiw.cvrg.eureka.services.test.AbstractServiceDataTest;
  */
 public class PropositionDaoTest extends AbstractServiceDataTest {
 
-	@Test
-	public void testDao() {
-		PhenotypeEntityDao dao = this.getInstance(PhenotypeEntityDao.class);
-		List<PhenotypeEntity> propositions = dao.getAll();
-		Assert.assertEquals(4, propositions.size());
-	}
+//	@Test
+//	public void testDao() {
+//		PhenotypeEntityDao dao = this.getInstance(PhenotypeEntityDao.class);
+//		List<PhenotypeEntity> propositions = dao.getAll();
+//		Assert.assertEquals(4, propositions.size());
+//	}
 }
