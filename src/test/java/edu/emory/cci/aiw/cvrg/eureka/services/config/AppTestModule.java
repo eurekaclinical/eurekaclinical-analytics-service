@@ -48,23 +48,11 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.AnalyticsServiceRoleDao; 
 
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.FrequencyTypeDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaFrequencyTypeDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaPhenotypeEntityDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaRelationOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaRoleDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaThresholdsOperatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaTimeUnitDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaUserDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaValueComparatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.RelationOperatorDao; 
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.ThresholdsOperatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.TimeUnitDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.ValueComparatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.PropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.TestPropositionFinder;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.PhenotypeEntityDao;
 
 /**
  * Configure Guice for non-web application testing.
@@ -82,12 +70,6 @@ public class AppTestModule extends AbstractModule {
         bind(AuthorizedUserDao.class).to(JpaUserDao.class);
         bind(org.eurekaclinical.standardapis.dao.UserDao.class).to(JpaUserDao.class);
         bind(AnalyticsServiceRoleDao.class).to(JpaRoleDao.class);
-        bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);
-        bind(ValueComparatorDao.class).to(JpaValueComparatorDao.class);
-        bind(FrequencyTypeDao.class).to(JpaFrequencyTypeDao.class);
-        bind(RelationOperatorDao.class).to(JpaRelationOperatorDao.class);
-        bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
-        bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
         bind(new TypeLiteral<RoleDao<AuthorizedRoleEntity>>() {}).to(JpaRoleDao.class);
         bind(new TypeLiteral<PropositionFinder<String>>() {
         }).to(TestPropositionFinder.class);

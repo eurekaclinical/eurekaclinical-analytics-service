@@ -2,6 +2,7 @@ package edu.emory.cci.aiw.cvrg.eureka.services.config;
 
 import org.eurekaclinical.protempa.client.EurekaClinicalProtempaClient;
 
+import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 /*-
@@ -52,6 +53,7 @@ public class EtlClientProvider implements Provider<EurekaClinicalProtempaClient>
 
 	private final String etlUrl;
 
+	@Inject
 	public EtlClientProvider(String inEtlUrl) {
 		this.etlUrl = inEtlUrl;
 	}
