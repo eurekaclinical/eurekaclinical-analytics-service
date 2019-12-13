@@ -52,23 +52,11 @@ import edu.emory.cci.aiw.cvrg.eureka.services.dao.AnalyticsServiceRoleDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.AuthorizedUserDao;
 
 import org.eurekaclinical.protempa.client.EurekaClinicalProtempaClient;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.FrequencyTypeDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaFrequencyTypeDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaPhenotypeEntityDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaRelationOperatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaRoleDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaThresholdsOperatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaTimeUnitDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaValueComparatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.dao.JpaUserDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.RelationOperatorDao; 
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.ThresholdsOperatorDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.TimeUnitDao;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.ValueComparatorDao;
 import edu.emory.cci.aiw.cvrg.eureka.services.entity.AuthorizedRoleEntity;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.PropositionFinder;
 import edu.emory.cci.aiw.cvrg.eureka.services.finder.SystemPropositionFinder;
-import edu.emory.cci.aiw.cvrg.eureka.services.dao.PhenotypeEntityDao;
 
 import org.eurekaclinical.standardapis.dao.RoleDao;
 import org.eurekaclinical.standardapis.dao.UserDao;
@@ -96,16 +84,6 @@ class AppModule extends AbstractModule {
         bind(AnalyticsServiceRoleDao.class).to(JpaRoleDao.class); 
         bind(new TypeLiteral<RoleDao<AuthorizedRoleEntity>>() {}).to(JpaRoleDao.class);
         bind(AuthorizedUserDao.class).to(JpaUserDao.class);
-        bind(PhenotypeEntityDao.class).to(JpaPhenotypeEntityDao.class);
-        bind(TimeUnitDao.class).to(JpaTimeUnitDao.class);
-        bind(RelationOperatorDao.class).to(JpaRelationOperatorDao.class);
-        bind(ValueComparatorDao.class).to(JpaValueComparatorDao.class);
-        bind(ThresholdsOperatorDao.class).to(JpaThresholdsOperatorDao.class);
-        bind(FrequencyTypeDao.class).to(JpaFrequencyTypeDao.class);
-        bind(ThresholdsOperatorDao.class).to
-                (JpaThresholdsOperatorDao.class);
-        bind(new TypeLiteral<PropositionFinder<
-                String>>(){}).to(SystemPropositionFinder.class);
 
         bind(Context.class).to(InitialContext.class);
         bind(Session.class).toProvider(
