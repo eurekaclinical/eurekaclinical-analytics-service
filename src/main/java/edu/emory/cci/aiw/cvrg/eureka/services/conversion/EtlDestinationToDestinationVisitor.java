@@ -42,6 +42,7 @@ package edu.emory.cci.aiw.cvrg.eureka.services.conversion;
 import org.eurekaclinical.eureka.client.comm.Cohort;
 import org.eurekaclinical.eureka.client.comm.CohortDestination;
 import org.eurekaclinical.eureka.client.comm.PhenotypeField;
+import org.eurekaclinical.eureka.client.comm.PhenotypeSearchDestination;
 import org.eurekaclinical.eureka.client.comm.Destination;
 import org.eurekaclinical.eureka.client.comm.I2B2Destination;
 import org.eurekaclinical.eureka.client.comm.Neo4jDestination;
@@ -63,6 +64,7 @@ import org.eurekaclinical.protempa.client.comm.EtlOmopDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientListDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientSetExtractorDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientSetSenderDestination;
+import org.eurekaclinical.protempa.client.comm.EtlPhenotypeSearchDestination;
 import org.eurekaclinical.protempa.client.comm.EtlTableColumn;
 import org.eurekaclinical.protempa.client.comm.EtlTabularFileDestination;
 
@@ -192,7 +194,24 @@ public class EtlDestinationToDestinationVisitor extends AbstractEtlDestinationVi
 	public void visit(EtlOmopDestination etlOmopDestination) {
 		OmopDestination omopDest = new OmopDestination();
         visitCommon(etlOmopDestination, omopDest);
-        this.destination = omopDest;		
+        List<TableColumn> tableColumns = new ArrayList<>();
+        for (EtlTableColumn etlTableColumn : etlOmopDestination.getTableColumns()) {
+            TableColumn tableColumn = new TableColumn();
+            tableColumn.setTableName(etlTableColumn.getTableName());
+            tableColumn.setColumnName(etlTableColumn.getColumnName());
+            tableColumn.setPath(etlTableColumn.getPath());
+            tableColumn.setFormat(etlTableColumn.getFormat());
+            tableColumns.add(tableColumn);
+        }
+        omopDest.setTableColumns(tableColumns);
+        this.destination = omopDest;
+	}
+	
+	@Override
+	public void visit(EtlPhenotypeSearchDestination etlPhenotypeSearchDestination) {
+		PhenotypeSearchDestination phenotypeSearchDestination = new PhenotypeSearchDestination();
+        visitCommon(etlPhenotypeSearchDestination, phenotypeSearchDestination);
+        this.destination = phenotypeSearchDestination;		
 	}
 
 }
