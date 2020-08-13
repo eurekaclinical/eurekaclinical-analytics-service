@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.eurekaclinical</groupId>
         <artifactId>eurekaclinical-parent-standard-deps</artifactId>
-        <version>4-Alpha-3</version>
+        <version>4-Alpha-4</version>
     </parent>
 
     <properties>
@@ -22,17 +22,17 @@
         <tomcat.httpsPort>8443</tomcat.httpsPort>        
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <commons-codec-version>1.4</commons-codec-version>
-        <eurekaclinical-protempa-client-version>3.1-Alpha-2</eurekaclinical-protempa-client-version>
-        <eurekaclinical-protempa-service-version>3.1-Alpha-2</eurekaclinical-protempa-service-version>
-        <eurekaclinical-standard-apis-version>4.0</eurekaclinical-standard-apis-version>
-        <eurekaclinical-common-version>5.0</eurekaclinical-common-version>
-        <eureka-client-version>5.1-Alpha-2</eureka-client-version>
-        <protempa-version>5.2-Alpha-1</protempa-version>
-        <cas-mock-version>2.3</cas-mock-version>
-        <eurekaclinical-ontology-version>2.0.4</eurekaclinical-ontology-version>
-        <aiw-i2b2-etl-version>4.5</aiw-i2b2-etl-version>
-        <javautil-version>4.4</javautil-version>
-        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <eurekaclinical-protempa-client-version>3.1-Alpha-3</eurekaclinical-protempa-client-version>
+        <eurekaclinical-protempa-service-version>3.1-Alpha-3</eurekaclinical-protempa-service-version>
+        <eurekaclinical-standard-apis-version>4.1-Alpha-1</eurekaclinical-standard-apis-version>
+        <eurekaclinical-common-version>5.1-Alpha-1</eurekaclinical-common-version>
+        <eureka-client-version>5.1-Alpha-3</eureka-client-version>
+        <protempa-version>5.2-Alpha-2</protempa-version>
+        <cas-mock-version>2.4</cas-mock-version>
+        <eurekaclinical-ontology-version>2.0.5</eurekaclinical-ontology-version>
+        <aiw-i2b2-etl-version>4.6</aiw-i2b2-etl-version>
+        <javautil-version>4.5</javautil-version>
+        <!-- maven.javadoc.skip>true</maven.javadoc.skip-->
     </properties>
 	
     <scm>
@@ -63,6 +63,15 @@
     <build>
         <finalName>eurekaclinical-analytics-service</finalName>
         <plugins>
+        	<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                	<additionalOptions>
+                    	<additionalOption>-Xdoclint:none</additionalOption>
+                    </additionalOptions>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jasig.maven</groupId>
                 <artifactId>maven-notice-plugin</artifactId>
