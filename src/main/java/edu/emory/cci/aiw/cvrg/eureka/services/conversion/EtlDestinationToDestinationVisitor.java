@@ -47,6 +47,7 @@ import org.eurekaclinical.eureka.client.comm.Destination;
 import org.eurekaclinical.eureka.client.comm.I2B2Destination;
 import org.eurekaclinical.eureka.client.comm.Neo4jDestination;
 import org.eurekaclinical.eureka.client.comm.OmopDestination;
+import org.eurekaclinical.eureka.client.comm.CovidOmopDestination;
 import org.eurekaclinical.eureka.client.comm.PatientSetExtractorDestination;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ import org.eurekaclinical.protempa.client.comm.EtlDestination;
 import org.eurekaclinical.protempa.client.comm.EtlI2B2Destination;
 import org.eurekaclinical.protempa.client.comm.EtlNeo4jDestination;
 import org.eurekaclinical.protempa.client.comm.EtlOmopDestination;
+import org.eurekaclinical.protempa.client.comm.EtlCovidOmopDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientListDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientSetExtractorDestination;
 import org.eurekaclinical.protempa.client.comm.EtlPatientSetSenderDestination;
@@ -205,6 +207,23 @@ public class EtlDestinationToDestinationVisitor extends AbstractEtlDestinationVi
         }
         omopDest.setTableColumns(tableColumns);
         this.destination = omopDest;
+	}
+	
+	@Override
+	public void visit(EtlCovidOmopDestination etlCovidOmopDestination) {
+		CovidOmopDestination covidOmopDest = new CovidOmopDestination();
+        visitCommon(etlCovidOmopDestination, covidOmopDest);
+        List<TableColumn> tableColumns = new ArrayList<>();
+        for (EtlTableColumn etlTableColumn : etlCovidOmopDestination.getTableColumns()) {
+            TableColumn tableColumn = new TableColumn();
+            tableColumn.setTableName(etlTableColumn.getTableName());
+            tableColumn.setColumnName(etlTableColumn.getColumnName());
+            tableColumn.setPath(etlTableColumn.getPath());
+            tableColumn.setFormat(etlTableColumn.getFormat());
+            tableColumns.add(tableColumn);
+        }
+        covidOmopDest.setTableColumns(tableColumns);
+        this.destination = covidOmopDest;
 	}
 	
 	@Override
