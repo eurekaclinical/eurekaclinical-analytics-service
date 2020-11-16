@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eurekaclinical</groupId>
     <artifactId>eurekaclinical-analytics-service</artifactId>
-    <version>3.1-Alpha-3</version>
+    <version>3.1-Alpha-4-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Eureka! Clinical Analytics Service</name>
     <description>Eureka! Clinical Analytics Services is the middle services layer
@@ -39,7 +39,7 @@
         <developerConnection>scm:git:https://github.com/eurekaclinical/eurekaclinical-analytics-service.git</developerConnection>
         <connection>scm:git:https://github.com/eurekaclinical/eurekaclinical-analytics-service.git</connection>
         <url>https://github.com/eurekaclinical/eurekaclinical-analytics-service.git</url>
-        <tag>eurekaclinical-analytics-service-3.1-Alpha-3</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
