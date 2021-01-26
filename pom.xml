@@ -23,14 +23,14 @@
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <commons-codec-version>1.4</commons-codec-version>
         <eurekaclinical-protempa-client-version>3.1-Alpha-4</eurekaclinical-protempa-client-version>
-        <eurekaclinical-protempa-service-version>3.1-Alpha-4</eurekaclinical-protempa-service-version>
+        <eurekaclinical-protempa-service-version>3.1-Alpha-5</eurekaclinical-protempa-service-version>
         <eurekaclinical-standard-apis-version>4.1-Alpha-1</eurekaclinical-standard-apis-version>
         <eurekaclinical-common-version>5.1-Alpha-1</eurekaclinical-common-version>
         <eureka-client-version>5.1-Alpha-4</eureka-client-version>
         <protempa-version>5.2-Alpha-2</protempa-version>
         <cas-mock-version>2.4</cas-mock-version>
         <eurekaclinical-ontology-version>2.0.5</eurekaclinical-ontology-version>
-        <aiw-i2b2-etl-version>4.6</aiw-i2b2-etl-version>
+        <aiw-i2b2-etl-version>4.7</aiw-i2b2-etl-version>
         <javautil-version>4.5</javautil-version>
         <!-- maven.javadoc.skip>true</maven.javadoc.skip-->
     </properties>
